@@ -97,25 +97,33 @@ router.post('/:id/reminders', (req, res) => {
   });
 });
 
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
-  const changes = req.body;
+// UPDATE USER
+router.put("/:id", (req, res) => {
+	if (!req.body.username) {
+		return res.status(400).json({
+			errorMessage: "Please provide username for the user.",
+		});
+	}
+	if (!req.body.role) {
+    
+    req.body.role = "student"
+		
+	}
 
-  Users.findById(id)
-  .then(user => {
-    if (user) {
-      Users.update(changes, id)
-      .then(updatedScheme => {
-        res.json(updatedScheme);
-      });
-    } else {
-      res.status(404).json({ message: 'Could not find user with given id' });
-    }
-  })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to update user' });
-  });
-});
+	Users.validateUser(req.params.id)
+
+	Users.update(req.params.id, req.body)
+		.then((user) => {
+		//	console.log(res);
+
+			return res.status(200).json(user);
+		})
+		.catch((error) => {
+			console.log(error);
+			return res.status(500).json({
+				error: "The user information could not be modified.",
+			});
+		});
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
@@ -132,5 +140,7 @@ router.delete('/:id', (req, res) => {
     res.status(500).json({ message: 'Failed to delete user' });
   });
 });
+})
+
 
 module.exports = router;

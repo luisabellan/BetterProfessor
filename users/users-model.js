@@ -48,6 +48,25 @@ async function add(user) {
     });
 }
 
+//UPDATE USER
+async function update(id, data) {
+    await db("users").where({ id }).first().update(data);
+    return findById(id);
+  }
+  
+async function validateUser(id) {
+    findById(id)
+      .then((user) => {
+        if (user.length === 0) {
+          return res.status(404).json({
+            message: "The user with the specified ID does not exist.",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
 function remove(id) {
     return db('users').where({id}).first().del()
@@ -61,4 +80,6 @@ module.exports = {
     findById, 
     add,
     remove,
+    validateUser,
+    update
 }
