@@ -8,7 +8,7 @@ const WelcomeRouter = require('./welcome/welcome-router.js');
 const server = express();
 
 server.use(express.json());
-server.use('/api/', WelcomeRouter)
+server.use('/', WelcomeRouter)
 server.use('/api/users', UsersRouter);
 //server.use('/api/projects', ProjectsRouter);
 
