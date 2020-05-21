@@ -28,7 +28,7 @@ exports.up = function(knex) {
         
         tbl.text('message')
           .notNullable()
-          tbl.date('date')
+          tbl.date('send_date')
           .notNullable
           tbl.time('time')
           .notNullable
