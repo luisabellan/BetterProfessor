@@ -10,7 +10,7 @@ exports.up = function(knex) {
           .notNullable()
           tbl.string('name', 128)
           .notNullable()
-          tbl.string('email', 128)
+          tbl.string('email_address', 128)
           .unique()
           .notNullable()
       })
