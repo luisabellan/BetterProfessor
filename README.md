@@ -11,6 +11,7 @@
 
 **GET /api/reminders** : Returns the list of users (students and mentors).
 
-***............work in progress...........***...
+                                        ***............work in progress...........***
+
  :hammer: :hammer: :hammer: :construction_worker: :construction_worker: :construction_worker: :hammer: :hammer: :hammer:
 
