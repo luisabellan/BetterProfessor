@@ -13,33 +13,37 @@ function getUsersWithProjects(project_id) {
 }
 // returns a list of reminder by reminder messages for preparing a user
 /* SELECT r.id, s.messages 
-FROM [user] AS r
-JOIN [reminder] AS s
-ON r.id = s.id; */
+FROM [user] AS u
+JOIN [reminder] AS r
+ON r.id = u.id; */
 
 function getReminders(user_id) {
-  return db('users as u')
+  return db('reminders as r')
   .select('r.message', 'r.date', 'r.time')
-  .join('reminder as r', 'u.id', 'r.id')
+  .join('reminders as r', 'u.id', 'r.id')
   .where({'u.id': user_id})
 }
-// returns a list of step by step instructions for preparing a recipe
-/* SELECT r.id, s.instructions 
-FROM [recipe] AS r
-JOIN [step] AS s
-ON r.id = s.id; */
 
-function getMessages(user_id) {
-  return db('user as u')
-  .select('u.id', 'r.messages')
-  .join('reminder as r', 'u.id', 'r.id')
-  .where({'u.id': user_id})
+function deleteReminder(id){
+  return db('reminders as r')
+  .select('r.message', 'r.date', 'r.time')
+  .where({'r.id': r.id}).del()
+}
+
+
+
+// CREATE REMINDER
+ function addReminder(reminder) {
+  
+    return db('reminders').insert(reminder)
+    
+ 
 }
 
   module.exports = {
     addReminder,
+    deleteReminder,
     getReminders,
     getUsersWithProjects,
-    getMessages
 }
 

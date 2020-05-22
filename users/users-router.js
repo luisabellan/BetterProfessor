@@ -48,20 +48,7 @@ router.get('/:id/projects-list', (req, res) => {
   })
 })
 
-// /api/users/:id/reminders
-router.get('/:id/reminders', (req, res) => {
-  const {id} = req.params
 
-  Users.getReminders(id)
-  .then(reminders => {
-    if (reminders) {
-      res.status(200).json(reminders);
-    } else {
-      res.status(404).json({ message: 'Could not find user with given id.' })
-    }
-
-  })
-})
 
 
 // UPDATE USER
