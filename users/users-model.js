@@ -26,18 +26,7 @@ function getProjectsList(user_id) {
     
 }
 
-// returns a list of reminder by reminder messages for preparing a user
-/* SELECT r.id, s.messages 
-FROM [user] AS r
-JOIN [reminder] AS s
-ON r.id = s.id; */
 
-function getReminders(user_id) {
-    return db('users as u')
-    .select('r.message', 'r.date', 'r.time')
-    .join('reminder as r', 'u.id', 'r.id')
-    .where({'u.id': user_id})
-}
 
 
 
@@ -76,7 +65,6 @@ function remove(id) {
 module.exports = {
     getUsers,
     getProjectsList,
-    getReminders,
     findById, 
     add,
     remove,

@@ -10,7 +10,9 @@
 
 *GET /api/users/:id* : Returns a user by their ID.
 
-*GET /api/reminders* : Returns the list of reminders for users (students and mentors).
+*GET /api/users/:id/reminders* : Returns the list of reminders for users (students and mentors).
+
+*GET /api/users/:id/projects* : Returns the list of projects for users (students and mentors).
 
  ***............work in progress...........***
 
