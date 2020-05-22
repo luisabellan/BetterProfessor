@@ -26,7 +26,7 @@ function getProjectsList(user_id) {
     
 }
 
-// returns a list of reminder by reminder messages for preparing a user
+// returns a list of reminders by reminder messages for preparing a user
 /* SELECT r.id, s.messages 
 FROM [user] AS r
 JOIN [reminder] AS s
