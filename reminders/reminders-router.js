@@ -6,9 +6,10 @@ const Users = require('../users/users-model');
 const router = express.Router();
 
 // Returns reminders for all users (ordered by user_id)
- router.get('/',  (req, res) => {
-  
-  Reminders.getReminders()
+// GET REMINDERS
+//GET /api/users/reminders
+ router.get('/reminders', (req, res) => {
+  Reminders.getRemindersById(id)
   .then(users => {
     res.status(200).json(users);
   })
@@ -19,25 +20,10 @@ const router = express.Router();
  
 
 
-// GET REMINDERS
-//GET /api/users/:id/reminders
-router.get('/:id/reminders', (req, res) => {
-  const {id} = req.params
-
-  Reminders.getReminders(id)
-  .then(reminders => {
-    if (reminders) {
-      res.status(200).json(reminders);
-    } else {
-      res.status(404).json({ message: 'Could not find user with given id.' })
-    }
-
-  })
-})
 
 
 
-// CREATE REMINDER FOR USER
+// CREATE REMINDER BY USER ID
 //POST /api/users/:id/reminders
 
 router.post('/:id/reminders', (req, res) => {
@@ -47,7 +33,7 @@ router.post('/:id/reminders', (req, res) => {
   Users.findById(id)
   .then(user => {
     if (user) {
-      Reminders.addReminder(reminderData, id)
+      Reminders.addReminder(reminderData)
       .then(reminder => {
         res.status(201).json(reminder);
       })
