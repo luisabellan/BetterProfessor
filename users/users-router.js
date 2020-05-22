@@ -64,7 +64,7 @@ router.get('/:id/reminders', (req, res) => {
 })
 
 
-
+// UPDATE USER
 router.post('/', (req, res) => {
   const userData = req.body;
 
