@@ -1,5 +1,6 @@
 const express = require('express');
 
+
 const Projects = require('./projects-model.js');
 
 const router = express.Router();
@@ -20,6 +21,7 @@ router.get('/:id/projects', (req, res) => {
   })
   .catch(err => {
     res.status(500).json({ message: 'Failed to get users' });
+
   });
 });
 
