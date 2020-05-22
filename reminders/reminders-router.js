@@ -1,7 +1,7 @@
 const express = require('express');
 
 const Reminders = require('../reminders/reminders-model');
-const Users = require('../users/userseminders-model');
+const Users = require('../users/users-model');
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ const router = express.Router();
 
 
 // GET REMINDERS
-// /api/users/:id/reminders
+//GET /api/users/:id/reminders
 router.get('/:id/reminders', (req, res) => {
   const {id} = req.params
 
@@ -36,20 +36,10 @@ router.get('/:id/reminders', (req, res) => {
 })
 
 
-//UPDATE REMINDER
-router.post('/', (req, res) => {
-  const reminderData = req.body;
-
-  Reminders.add(reminderData)
-  .then(user => {
-    res.status(201).json(user);
-  })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to create new user' });
-  });
-});
 
 // CREATE REMINDER FOR USER
+//POST /api/users/:id/reminders
+
 router.post('/:id/reminders', (req, res) => {
   const reminderData = req.body;
   const { id } = req.params; 
