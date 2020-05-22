@@ -1,19 +1,23 @@
 
 const db = require('../data/db-config.js');
 
-// returns  all recipes in the system that utilize a single ingredient 
+// returns  all users in the system that are working on a single project 
 // TODO: Not working right now
-function getRecipesWithIngredient(ingredient_id) {
-    const recipes =  db('i.name as ingredient_name', 'r.name  as recipe_name')
-    .join('ingredient as i')
-    .select('i.name as ingredient_name','r.name as recipe_name')
+
+function getUsersWithProjects(project_id) {
+    const users =  db('p.name as project_name', 'u.name  as user_name')
+    .join('project as p')
+    .select('p.name as project_name','u.name as user_name')
     
     
-    return recipes.where({ingredient_id})
+    return users.where({project_id})
+
 }
 
 
   module.exports = {
-    getRecipesWithIngredient
+
+    getUsersWithProjects
+
 }
 
