@@ -11,16 +11,17 @@ router.get('/:id/projects', (req, res) => {
 
   Projects.getUsersWithProjects(id)
   .then(users => {
-    if (users.length) {
+    if (users.length > 0) {
       console.log(user)
       
       res.status(200).json(users);
     } else {
-      res.status(404).json({ message: 'Could not find user for given project' })
+      console.log(user)
+      res.status(404).json({ message: 'Could not find project for given project' })
     }
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to get users' });
+    res.status(500).json({ message: "Failed to get users's projects" });
 
   });
 });

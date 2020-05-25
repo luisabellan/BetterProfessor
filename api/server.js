@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const authRouter = require("../auth/auth-router.js");
 const usersRouter = require("../users/users-router");
+const usersProjects = require("../projects/projects-router");
 //const jokesRouter = require('../jokes/jokes-router.js');
 const dotenv = require("dotenv");
 
@@ -23,6 +24,7 @@ server.use(
 
 server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
+server.use("/api/users", usersProjects);
 //server.use("/jokes", jokesRouter)
 
 server.get("/", (req, res, next) => {

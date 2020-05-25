@@ -28,7 +28,7 @@ server.use(express.json());
 
 server.use("/", WelcomeRouter);
 server.use("/api/users/", UsersRouter);
-server.use("/api/users/", ProjectsRouter);
+server.use("/api/users/projects", ProjectsRouter);
 server.use("/api/users/", RemindersRouter);
 
 /* TODO change and add these once /login and /register are done
