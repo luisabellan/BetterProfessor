@@ -19,7 +19,7 @@ describe("users integration tests", () => {
       username: "Jake",
       password: "abc123",
       name: "Jake Smith",
-      email_address: "jake@gmail.com"
+      email_address: "jake@gmail.com",
       role: "admin",
     };
 
@@ -45,7 +45,7 @@ describe("users integration tests", () => {
       username: "Jake",
       password: "abc123",
       name: "Jake Smith",
-      email_address: "jake@gmail.com"
+      email_address: "jake@gmail.com",
       role: "admin",
     });
   });
@@ -66,7 +66,7 @@ describe("users integration tests", () => {
       username: "Jake",
       password: "abc123",
       name: "Jake Smith",
-      email_address: "jake@gmail.com"
+      email_address: "jake@gmail.com",
       role: "admin",
     };
 
@@ -85,7 +85,7 @@ describe("users integration tests", () => {
       username: "Paul",
       password: "abc123",
       name: "Paul Smith",
-      email_address: "paul@gmail.com"
+      email_address: "paul@gmail.com",
       role: "admin",
     };
 
@@ -100,17 +100,18 @@ describe("users integration tests", () => {
       username: "Paul",
       password: "abc123",
       name: "Paul Smith",
-      email_address: "paul@gmail.com"
+      email_address: "paul@gmail.com",
       role: "admin",
     });
   });
 
   it("GET /api/users/:id (not found)", async () => {
     let id = 5000;
-    const expectedStatusCode = 200;
+    const expectedStatusCode = 404;
     let res;
     res = await supertest(server).get(`/api/users/${id}`);
     expect(res.status).toEqual(expectedStatusCode);
+    expect(res.username).toBe(undefined);
     expect(res.type).toBe("application/json");
   });
 });

@@ -6,7 +6,7 @@
 */
 const request = require('supertest'); // calling it "request" is a common practice
 
-const server = require('../index.js'); //
+const server = require('../api/server'); //
 const db = require("../data/dbConfig");
 
 beforeEach(async () => {
