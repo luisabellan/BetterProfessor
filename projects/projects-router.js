@@ -8,7 +8,7 @@ const router = express.Router();
 // /api/users/:id/projects
 router.get('/:id/projects', (req, res) => {
   const { id } = req.params;
-
+//
   Projects.getUsersWithProjects(id)
   .then(users => {
     if (users.length > 0) {
