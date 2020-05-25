@@ -24,6 +24,7 @@ router.get('/:id', (req, res) => {
     if (user) {
       res.status(200).json(user);
     } else {
+      console.log("get by id")
       res.status(404).json({ message: 'Could not find user with given id.' })
     }
   })
@@ -42,7 +43,7 @@ router.get('/:id/projects-list', (req, res) => {
     if (projects) {
       res.status(200).json(projects);
     } else {
-      res.status(404).json({ message: 'Could not find user with given id.' })
+      res.status(404).json({ message: 'Could not find project with given id.' })
     }
 
   })
@@ -76,6 +77,7 @@ router.post('/:id/reminders', (req, res) => {
         res.status(201).json(reminder);
       })
     } else {
+      //console.log("here")
       res.status(404).json({ message: 'Could not find user with given id.' })
     }
   })
