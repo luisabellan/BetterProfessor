@@ -51,8 +51,8 @@ router.get('/:id/projects-list', (req, res) => {
 
 
 
-// UPDATE USER
-router.post('/', (req, res) => {
+// CREATE USER
+router.post('/users', (req, res) => {
   const userData = req.body;
 
   Users.add(userData)

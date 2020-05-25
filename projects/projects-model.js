@@ -1,5 +1,5 @@
 
-const db = require('../data/db-config.js');
+const db = require('../data/dbConfig.js');
 
 // returns  all users in the system that are working on a single project 
 // TODO: Not working right now

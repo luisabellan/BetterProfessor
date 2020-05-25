@@ -1,5 +1,5 @@
 
-const db = require('../data/db-config.js');
+const db = require('../data/dbConfig.js');
 
 /* // returns  all recipes in the system that utilize a single ingredient 
 // TODO: Not working right now

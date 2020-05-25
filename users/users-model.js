@@ -1,4 +1,4 @@
-const db = require('../data/db-config.js');
+const db = require('../data/dbConfig.js');
 
 //  return a list of all users in the database.
 
@@ -40,7 +40,7 @@ function getReminders(user_id) {
 }
 
 
-
+// CREATE USER
 async function add(user) {
     await db('users').insert(user)
     .then(ids => {
