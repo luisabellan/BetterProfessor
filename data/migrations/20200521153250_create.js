@@ -70,8 +70,8 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-        .dropTableIfExists('reminders')
-        .dropTableIfExists('projects')
-        .dropTableIfExists('users')
-        .dropTableIfExists('users_projects')
+    .dropTableIfExists('users')
+    .dropTableIfExists('projects')
+    .dropTableIfExists('reminders')
+    .dropTableIfExists('users_projects')
 }

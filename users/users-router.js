@@ -5,10 +5,11 @@ const Users = require('./users-model.js');
 const router = express.Router();
 
 // all users (without details about projects or reminders)
-router.get('/',  (req, res) => {
+router.get('/api/users/',  (req, res) => {
   
   Users.getUsers()
-  .then(users => {
+    .then(users => {
+    console.log("/api/users")
     res.status(200).json(users);
   })
   .catch(err => {

@@ -1,19 +1,12 @@
 const db = require("../data/dbConfig.js");
 
-// returns  all users in the system that utilize a single project
-// TODO: Not working right now
-function getUsersWithProjects(project_id) {
-  const users = db("p.name as project_name", "u.name  as user_name")
-    .join("project as p")
-    .select("p.name as project_name", "u.name as user_name");
 
-  return users.where({ project_id });
-}
 
-//  return a list of all users in the database.
+//  return a list of all projects in the database.
 
-function getProjects() {
-  return db("projects");
+function getProjects(id) {
+    return db("projects").where({ id }).first();
+
 }
 
 // resolves to  Resolve to a single user object (or null)
@@ -59,7 +52,17 @@ async function add(project) {
 function remove(id) {
   return db("projects").where({ id }).first().del();
 }
+// returns  all users in the system that utilize a single project
+// TODO: Not working right now
+function getUsersWithProjects(project_id) {
+  const users = db("p.name as project_name", "u.name  as user_name")
+    .join("project as p")
+    .select("p.name as project_name", "u.name as user_name");
 
+  return users.where({ project_id });
+
+  
+}
 module.exports = {
   getProjects,
   getProjectList,

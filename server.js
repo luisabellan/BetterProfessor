@@ -20,16 +20,15 @@ server.use(
 
 const UsersRouter = require("./users/users-router.js");
 const WelcomeRouter = require("./welcome/welcome-router.js");
-
 const ProjectsRouter = require("./projects/projects-router.js");
 const RemindersRouter = require("./reminders/reminders-router.js");
 
 server.use(express.json());
 
 server.use("/", WelcomeRouter);
- server.use("/api/users/", UsersRouter);
-//server.use("/api/", ProjectsRouter);
-//server.use("/api/users/", RemindersRouter);
+server.use("/api/", ProjectsRouter);
+server.use("/api/", UsersRouter);
+server.use("/api/", RemindersRouter);
 
 /* TODO change and add these once /login and /register are done
  server.use("/auth", authRouter)
