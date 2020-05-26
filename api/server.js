@@ -24,8 +24,12 @@ server.use(
 
 server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
-server.use("/api/users", usersProjects);
+server.use("/api/projects", usersProjects);
 //server.use("/jokes", jokesRouter)
+
+/* TODO change and add these once /login and /register are done
+ server.use("/auth", authRouter)
+server.use("/jokes", jokesRouter) */
 
 server.get("/", (req, res, next) => {
   res.json({

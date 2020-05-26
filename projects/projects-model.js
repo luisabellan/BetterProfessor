@@ -4,8 +4,9 @@ const db = require("../data/dbConfig.js");
 
 //  return a list of all projects in the database.
 
-function getProjects(id) {
-    return db("projects").where({ id }).first();
+ function getProjects() {
+   return db('projects')
+   
 
 }
 
@@ -61,7 +62,7 @@ function getUsersWithProjects(project_id) {
 
   return users.where({ project_id });
 
-  
+
 }
 module.exports = {
   getProjects,

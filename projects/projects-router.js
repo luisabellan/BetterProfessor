@@ -5,15 +5,15 @@ const Projects = require("./projects-model.js");
 const router = express.Router();
 
 // /api/projects
-router.get("/projects", async (req, res) => {
-   Projects.getProjects(1);
+router.get("/", (req, res) => {
   console.log("/api/projects")
+   Projects.getProjects();
   //return db("projects");
 
 });
 
 // /api/users/:id/projects
-router.get("/users/:id/projects", (req, res) => {
+router.get("/:id/projects", (req, res) => {
   const { id } = req.params;
 
   Projects.getUsersWithProjects(id)

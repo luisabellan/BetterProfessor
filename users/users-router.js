@@ -5,11 +5,11 @@ const Users = require('./users-model.js');
 const router = express.Router();
 
 // all users (without details about projects or reminders)
-router.get('/api/users/',  (req, res) => {
+router.get('/',  (req, res) => {
   
   Users.getUsers()
     .then(users => {
-    console.log("/api/users")
+    console.log("/users")
     res.status(200).json(users);
   })
   .catch(err => {
@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
 
 // /api/users/:id/projects-list
 
-router.get('/:id/projects-list', (req, res) => {
+router.get('/users/:id/projects-list', (req, res) => {
   const {id} = req.params
 
   Users.getProjectsList(id)
@@ -88,7 +88,7 @@ router.post('/:id/reminders', (req, res) => {
 });
 
 // UPDATE USER
-router.put("/:id", (req, res) => {
+router.put("/users/:id", (req, res) => {
 	if (!req.body.username) {
 		return res.status(400).json({
 			errorMessage: "Please provide username for the user.",
@@ -115,7 +115,7 @@ router.put("/:id", (req, res) => {
 			});
 		});
 
-router.delete('/:id', (req, res) => {
+router.delete('/users/:id', (req, res) => {
   const { id } = req.params;
 
   Users.remove(id)
