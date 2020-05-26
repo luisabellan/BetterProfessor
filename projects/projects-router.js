@@ -24,7 +24,7 @@ router.get("/projects", (req, res) => {
     });
 
   // /api/users/:id/projects
-  router.get("users/:id/projects", (req, res) => {
+  router.get("/users/:id/projects", (req, res) => {
     const { id } = req.params;
 
     Projects.getUsersWithProjects(id)
@@ -44,8 +44,34 @@ router.get("/projects", (req, res) => {
       .catch((err) => {
         res.status(500).json({ message: "Failed to get users's projects" });
       });
+
+
+
+
   });
 
-})
+
+// CREATE PROJECT
+router.post('/projects', (req, res) => {
+  const projectData = req.body;
+
+  Projects.add(projectData)
+  .then(project => {
+  console.log("POST /api/projects - added")
+
+    res.status(201).json(project);
+  })
+  .catch (err => {
+  console.log("POST /api/projects - error")
+
+    res.status(500).json({ message: 'Failed to create new project' });
+  });
+});
+
+
+
+
+
+});
 
 module.exports = router;

@@ -4,9 +4,9 @@ const db = require("../data/dbConfig.js");
 
 //  return a list of all projects in the database.
 
- function getProjects() {
-   return db('projects')
-   
+function getProjects() {
+  return db('projects')
+
 
 }
 
@@ -42,13 +42,16 @@ function getMessages(user_id) {
     .where({ "u.id": user_id });
 }
 
+
+
+// CREATE PROJECT
 async function add(project) {
-  await db("projects")
-    .insert(project)
-    .then((ids) => {
-      return findById(ids[0]);
-    });
+  await db('projects').insert(project)
+  .then(ids => {
+    return findById(ids[0]);
+  });
 }
+
 
 function remove(id) {
   return db("projects").where({ id }).first().del();
