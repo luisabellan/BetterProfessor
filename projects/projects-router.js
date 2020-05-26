@@ -27,9 +27,9 @@ router.get("/projects", (req, res) => {
   router.get("/users/:id/projects", (req, res) => {
     const { id } = req.params;
 
-    Projects.getUsersWithProjects(id)
+    Projects.getProjectList(id)
       .then((users) => {
-        if (users.length) {
+        if (users.length > 0) {
           console.log("getUsersWithProjects - if");
 
           res.status(200).json(users);

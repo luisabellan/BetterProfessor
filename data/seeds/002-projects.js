@@ -7,24 +7,29 @@ exports.seed = function(knex, Promise) {
       return knex('projects').insert([
         {
           name: 'The human brain',
-          due_date: '2020-07-17'
+          due_date: '2020-07-17',
+          users_ids: ['1','3','5']
         },
         {
           name: 'Healthy habits',
-          due_date: '2020-05-02'
-        },
+          due_date: '2020-05-02',
+          users_ids: ['2','3','4']        },
         {
           name: 'The Second World War',
-          due_date: '2020-06-12'
+          due_date: '2020-06-12',
+          users_ids: ['1','2','3']
         },
         {
           name: 'Ancient Egypt',
-          due_date: '2020-05-20'
+          due_date: '2020-05-20',
+          users_ids: ['3','4','5']
         },
         {
-          name: 'Artificial Inteligence',
-          due_date: '2020-05-03'
+          name: "Artificial Inteligence",
+          due_date: "2020-05-03",
+          users_ids: ['1','3','4']
         }
+    
         
         
 

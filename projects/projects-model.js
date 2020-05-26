@@ -22,11 +22,11 @@ function findById(id) {
 FROM [users] AS u
 JOIN [projects] AS p; */
 
-function getProjectList(user_id) {
-  return db("user as u")
-    .join("project as p")
-    .select("p.name as project_name", "p.due_date")
-    .where({ "u.id": user_id });
+function getProjectList(users_ids) {
+  return db("projects as p")
+  .select("p.name as project_name", "p.due_date")
+    .join("users as u")
+    .where({ users_ids });
 }
 
 // returns a list of messages for a user
@@ -56,7 +56,7 @@ function findById(id) {
     return findById(ids[0]);
   });
 }
-
+ 
 
 function remove(id) {
   return db("projects").where({ id }).first().del();

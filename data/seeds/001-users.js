@@ -10,6 +10,7 @@ exports.seed = function(knex, Promise) {
           username: 'patrick',
           password:'abc123',
           name:"Patrick O'Connor",
+          project_id: [],
           role:'mentor',
           email_address:'pat@gmail.com'
 
@@ -18,6 +19,7 @@ exports.seed = function(knex, Promise) {
           username: 'rick',
           password:'abc123',
           name:'Richard Coleman',
+          project_id: [],
           role:'student',
           email_address:'rick@gmail.com'
 
@@ -26,6 +28,7 @@ exports.seed = function(knex, Promise) {
           username: 'mary',
           password:'abc123',
           name:'Mary Smith',
+          project_id: [],
           role:'student',
           email_address:'mary@gmail.com'
 
@@ -34,6 +37,7 @@ exports.seed = function(knex, Promise) {
           username: 'dan',
           password:'abc123',
           name:'Daniel Layman',
+          project_id: [],
           role:'student',
           email_address:'dan@gmail.com'
 
@@ -42,6 +46,7 @@ exports.seed = function(knex, Promise) {
           username: 'steph',
           password:'abc123',
           name:'Stephanie Crook',
+          project_id: [],
           role:'student',
           email_address:'steph@gmail.com'
 

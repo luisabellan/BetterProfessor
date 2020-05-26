@@ -13,6 +13,8 @@ exports.up = function (knex) {
             tbl.string('email_address', 128)
                 .unique()
                 .notNullable()
+            tbl.enum("project_id", [])
+                .defaultTo("student")
             tbl.enum("role", ["student", "mentor"])
                 .notNull()
                 .defaultTo("student")
@@ -24,6 +26,13 @@ exports.up = function (knex) {
                 .notNullable()
             tbl.date('due_date')
                 .notNullable()
+            tbl.enum('users_ids', ['1', '2', '3', '4', '5'])
+                .unique()
+                .unsigned()
+                .references('id')
+                .inTable('users')
+                .onUpdate('CASCADE')
+                .onDelete('CASCADE')
 
 
         })
@@ -48,13 +57,11 @@ exports.up = function (knex) {
         .createTable('users_projects', tbl => {
             tbl.integer('user_id')
                 .unsigned()
-                .notNullable()
                 .references('id')
                 // this table must exist already
                 .inTable('users')
             tbl.integer('project_id')
                 .unsigned()
-                .notNullable()
                 .references('id')
                 // this table must exist already
                 .inTable('projects')
