@@ -25,6 +25,7 @@ exports.up = function (knex) {
             tbl.date('due_date')
                 .notNullable()
 
+
         })
         .createTable('reminders', tbl => {
             tbl.increments()
@@ -70,8 +71,8 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-    .dropTableIfExists('users')
-    .dropTableIfExists('projects')
-    .dropTableIfExists('reminders')
-    .dropTableIfExists('users_projects')
+        .dropTableIfExists('users')
+        .dropTableIfExists('projects')
+        .dropTableIfExists('reminders')
+        .dropTableIfExists('users_projects')
 }

@@ -43,10 +43,15 @@ function getMessages(user_id) {
 }
 
 
+// resolves to  Resolve to a single project object (or null)
+
+function findById(id) {
+  return db('projects').where({ id }).first();
+}
 
 // CREATE PROJECT
-async function add(project) {
-  await db('projects').insert(project)
+ function add(project) {
+  db('projects').insert(project)
   .then(ids => {
     return findById(ids[0]);
   });

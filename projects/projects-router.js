@@ -50,7 +50,7 @@ router.get("/projects", (req, res) => {
 
   });
 
-
+/* 
 // CREATE PROJECT
 router.post('/projects', (req, res) => {
   const projectData = req.body;
@@ -66,7 +66,7 @@ router.post('/projects', (req, res) => {
 
     res.status(500).json({ message: 'Failed to create new project' });
   });
-});
+}); */
 
 
 
