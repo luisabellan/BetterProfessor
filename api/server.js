@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const authRouter = require("../auth/auth-router.js");
 const usersRouter = require("../users/users-router");
-const usersProjects = require("../projects/projects-router");
+const projectsRouter = require("../projects/projects-router");
 //const jokesRouter = require('../jokes/jokes-router.js');
 const dotenv = require("dotenv");
 
@@ -23,8 +23,8 @@ server.use(
 );
 
 server.use("/api/auth", authRouter);
-server.use("/api/users", usersRouter);
-server.use("/api/projects", usersProjects);
+server.use("/api/", usersRouter);
+server.use("/api/", projectsRouter);
 //server.use("/jokes", jokesRouter)
 
 /* TODO change and add these once /login and /register are done
