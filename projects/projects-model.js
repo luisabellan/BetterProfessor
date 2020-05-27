@@ -23,7 +23,7 @@ FROM [users] AS u
 JOIN [projects] AS p; */
 
 //TODO continue here
-async function getProjectList(id) {
+function getProjectList(id) {
   return db("projects as p")
   .select("p.name as project_name", "p.due_date")
     .join("users as u")
