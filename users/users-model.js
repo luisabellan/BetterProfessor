@@ -25,10 +25,10 @@ FROM [user] AS r
 JOIN [project] AS i; */
 
 function getProjectsList(user_id) {
-    return db('user as r')
-    .join('project as i')
-    .select('i.name as project_name', 'i.due_date')
-    .where({'r.id': user_id})
+    return db('users as u')
+    .join('projects as p')
+    .select('p.name as project_name', 'p.due_date', 'p.users_ids')
+    .where({'u.id': user_id})
     
 }
 
@@ -74,10 +74,9 @@ async function validateUser(id) {
       });
   }
 
-function remove(id) {
-    return db('users').where({id}).first().del()
-
-}
+  function remove(id) {
+    return db("users").where({ id }).delete()
+  }
 
 module.exports = {
     getUsers,

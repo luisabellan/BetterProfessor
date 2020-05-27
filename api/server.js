@@ -22,8 +22,8 @@ server.use(
   })
 );
 
-server.use("/api/auth", authRouter);
 server.use("/api/", usersRouter);
+server.use("/api/auth", authRouter);
 server.use("/api/", projectsRouter);
 //server.use("/jokes", jokesRouter)
 

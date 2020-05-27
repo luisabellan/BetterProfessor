@@ -10,11 +10,11 @@ router.get("/projects", (req, res) => {
   Projects.getProjects()
     .then((projects) => {
       if (projects.length) {
-        console.log("getUsersWithProjects - if");
+        console.log("getProjects - if");
 
         res.status(200).json(projects);
       } else {
-        console.log("getUsersWithProjects - else");
+        console.log("getProjects - else");
 
         res
           .status(404)
@@ -22,30 +22,28 @@ router.get("/projects", (req, res) => {
       }
 
     });
+// GET Projects by user id
+router.get("/users/:id/projects", (req, res) => {
+  const { id } = req.params;
 
-  // /api/users/:id/projects
-  router.get("/users/:id/projects", (req, res) => {
-    const { id } = req.params;
+  Projects.getUsersWithProjects(id)
+    .then((users) => {
+      if (users.length) {
+        console.log("getUsersWithProjects - if");
 
-    Projects.getProjectList(id)
-      .then((users) => {
-        if (users.length > 0) {
-          console.log("getUsersWithProjects - if");
+        res.status(200).json(users);
+      } else {
+        console.log("getUsersWithProjects - else");
 
-          res.status(200).json(users);
-        } else {
-          console.log("getUsersWithProjects - else");
-
-          res
-            .status(404)
-            .json({ message: "Could not find project for given project" });
-        }
-      })
-      .catch((err) => {
-        res.status(500).json({ message: "Failed to get users's projects" });
-      });
-
-
+        res
+          .status(404)
+          .json({ message: "Could not find project for given project" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to get users's projects" });
+    });
+  
 
 
   });

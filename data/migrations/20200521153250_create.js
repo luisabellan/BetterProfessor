@@ -2,7 +2,7 @@
 exports.up = function (knex) {
     return knex.schema
         .createTable('users', tbl => {
-            tbl.increments()
+            tbl.increments('userId')
             tbl.string('username', 128)
                 .unique()
                 .notNullable()
@@ -13,8 +13,7 @@ exports.up = function (knex) {
             tbl.string('email_address', 128)
                 .unique()
                 .notNullable()
-            tbl.enum("project_id", [])
-                .defaultTo("student")
+            
             tbl.enum("role", ["student", "mentor"])
                 .notNull()
                 .defaultTo("student")
@@ -26,7 +25,7 @@ exports.up = function (knex) {
                 .notNullable()
             tbl.date('due_date')
                 .notNullable()
-            tbl.enum('users_ids', ['1', '2', '3', '4', '5'])
+            tbl.enum('user_id', [])
                 .unique()
                 .unsigned()
                 .references('id')
