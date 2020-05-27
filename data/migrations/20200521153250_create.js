@@ -22,9 +22,11 @@ exports.up = function (knex) {
 
             tbl.increments()
             tbl.string('name', 128)
-                .notNullable()
+            .unique()
+            .notNullable()
             tbl.date('due_date')
-                .notNullable()
+            .unique()
+            .notNullable()
 
 
 
