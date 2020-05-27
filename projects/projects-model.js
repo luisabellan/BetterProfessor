@@ -21,16 +21,38 @@ function findById(id) {
 /* SELECT p.name as project_name, p.due_date, up.user_id as user_id, up.project_id as project_id
 FROM projects as p
 JOIN users as u, users_projects as up
-WHERE project_id=p.id
-ORDER by project_id*/
+WHERE project_id=p.id AND  user_id = 2
+ORDER by project_id */
+
+// new one
+/* 
+function getProjectList(id) {
+  return db("projects as p")
+  .select("p.name as project_name", "p.due_date", "up.user_id as user_id", "up.project_id as project_id")
+  .join("users as u", "users_projects as up")
+  .where({ 'u.id': id })
+  .orderBy("project_id"); 
+} */
 
 //TODO continue here
-async function getProjectList(id) {
-   db("projects as p")
-    .select("p.name as project_name", "p.due_date", "id as user_id", "up.project_id as project_id")
-    .join("users as u", "users_projects as up")
-    .where({ "project_id": "p.id" })
-    .orderBy('project_id')
+function getProjectList(id) {
+  return db("projects as p")
+    .select(
+      "p.name as project_name",
+      "p.due_date",
+      "up.project_id as project_id",
+      "up.user_id as user_id")
+    .join("users_projects as up")
+    .join("users as u")
+    .where({
+      'u.id': id,
+
+    })
+  orderBy("project_id");
+  /*  .andWhere({
+    'p.id':'p.id'
+
+   }); */
 }
 
 // returns a list of messages for a user
