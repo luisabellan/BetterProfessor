@@ -61,12 +61,12 @@ router.get("/projects", (req, res) => {
 
   });
 
-  /* 
+  
   // CREATE PROJECT
-  router.post('/projects', (req, res) => {
+  router.post('/projects', async (req, res) => {
     const projectData = req.body;
   
-    Projects.add(projectData)
+    await Projects.add(projectData)
     .then(project => {
     console.log("POST /api/projects - added")
   
@@ -77,7 +77,7 @@ router.get("/projects", (req, res) => {
   
       res.status(500).json({ message: 'Failed to create new project' });
     });
-  }); */
+  }); 
 
 
 

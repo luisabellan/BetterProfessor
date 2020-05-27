@@ -13,6 +13,19 @@ function getUsersWithProjects(project_id) {
 }
 */
 
+// returns a list of messages for a user
+/* SELECT r.id, s.message 
+FROM [user] AS u
+JOIN [reminder] AS r
+ON u.id = r.id; */
+
+function getMessages(user_id) {
+  return db('user as u')
+    .select('r.id', 'r.message')
+    .join('reminders as r', 'u.id', 'r.id')
+    .where({ 'u.id': user_id });
+}
+
 function getReminders() {
   return db('reminders as r')
     .select('r.message', 'r.date', 'r.time', 'r.user_id')
@@ -59,6 +72,8 @@ module.exports = {
   addReminder,
   deleteReminder,
   getReminders,
-  getRemindersById
+  getRemindersById,
+  getMessages
+
 }
 

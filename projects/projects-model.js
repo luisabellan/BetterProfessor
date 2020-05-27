@@ -36,12 +36,12 @@ function getProjectList(id) {
       'up.project_id as project_id',
       'up.user_id as user_id')
     .from('users as u')
-    .join('projects as p', 'project_id','p.id')
+    .join('projects as p', 'project_id', 'p.id')
     .join('users_projects as up', 'user_id', 'u.id')
     .orderBy('project_name', 'desc')
 
 
-   
+
 
 
 }
@@ -56,18 +56,6 @@ function getProjectList(id) {
 } */
 
 
-// returns a list of messages for a user
-/* SELECT r.id, s.message 
-FROM [user] AS u
-JOIN [reminder] AS r
-ON u.id = r.id; */
-
-function getMessages(user_id) {
-  return db('user as u')
-    .select('r.id', 'r.message')
-    .join('reminders as r', 'u.id', 'r.id')
-    .where({ 'u.id': user_id });
-}
 
 
 // resolves to  Resolve to a single project object (or null)
@@ -77,11 +65,11 @@ function findById(id) {
 }
 
 // CREATE PROJECT
-function add(project) {
-  db('projects').insert(project)
-    .then(ids => {
-      return findById(ids[0]);
-    });
+ async function add(project) {
+   db('projects').insert(project)
+  .then(ids => {
+    return findById(ids[0]);
+  });
 }
 
 
@@ -102,7 +90,6 @@ function getUsersWithProjects(id) {
 module.exports = {
   getProjects,
   getProjectList,
-  getMessages,
   findById,
   add,
   remove,
