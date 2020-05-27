@@ -25,7 +25,7 @@ exports.up = function (knex) {
                 .notNullable()
             tbl.date('due_date')
                 .notNullable()
-           
+
 
 
         })
@@ -38,11 +38,22 @@ exports.up = function (knex) {
                 .notNullable
             tbl.time('time')
                 .notNullable
-     
+
         })
 
         .createTable('users_projects', tbl => {
 
+
+            tbl.integer('project_id')
+            .unsigned()
+            .notNullable()
+            .references('id')
+            // this table must exist already
+            .inTable('projects')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE')
+
+            
             tbl.integer('user_id')
                 .unsigned()
                 .references('id')
@@ -52,14 +63,7 @@ exports.up = function (knex) {
                 .onDelete('CASCADE')
 
 
-            tbl.integer('project_id')
-                .notNullable()
-                .unsigned()
-                .references('id')
-                // this table must exist already
-                .inTable('projects')
-                .onUpdate('CASCADE')
-                .onDelete('CASCADE')
+          
 
             // the combination of the two keys becomes our primary key
             // will enforce unique combinations of ids
@@ -73,8 +77,8 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
+    .dropTableIfExists('users_projects')
+    .dropTableIfExists('reminders')
+    .dropTableIfExists('projects')
         .dropTableIfExists('users')
-        .dropTableIfExists('projects')
-        .dropTableIfExists('reminders')
-        .dropTableIfExists('users_projects')
 }

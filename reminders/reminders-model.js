@@ -12,6 +12,7 @@ function getUsersWithProjects(project_id) {
   return users.where({ project_id })
 }
 */
+
 function getReminders() {
   return db('reminders as r')
     .select('r.message', 'r.date', 'r.time', 'r.user_id')

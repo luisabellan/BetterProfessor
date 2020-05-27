@@ -6,7 +6,7 @@ const Projects = require('../projects/projects-model.js');
 const router = express.Router();
 
 // all users (without details about projects or reminders)
-router.get('/users', (req, res) => {
+router.get('/', (req, res) => {
 
   Users.getUsers()
     .then(users => {
@@ -20,7 +20,7 @@ router.get('/users', (req, res) => {
 
 // /api/users/:id/projects
 
-router.get('/users/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const { id } = req.params;
 
   Users.findById(id)
@@ -56,7 +56,7 @@ router.post('/users', (req, res) => {
   });
 }); */
 
-router.post('/users/:id/reminders', (req, res) => {
+router.post('/:id/reminders', (req, res) => {
   const reminderData = req.body;
   const { id } = req.params;
 
@@ -78,7 +78,7 @@ router.post('/users/:id/reminders', (req, res) => {
 });
 
 // UPDATE USER
-router.put("/users/:id", (req, res) => {
+router.put("/:id", (req, res) => {
   Users.findById(req.params.id)
   .then((user) => {
     if (!user) {
@@ -114,7 +114,7 @@ router.put("/users/:id", (req, res) => {
 
 
 // DELETE USER
-router.delete('/users/:id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   Users.validateUser(req.params.id)
   Users.remove(req.params.id)
     .then(() => res.status(204).end())

@@ -18,16 +18,19 @@ function findById(id) {
 
 // returns a list of all projects and due_dates for a given user
 
-/* SELECT  p.name as project_name, p.due_date 
-FROM [users] AS u
-JOIN [projects] AS p; */
+/* SELECT p.name as project_name, p.due_date, up.user_id as user_id, up.project_id as project_id
+FROM projects as p
+JOIN users as u, users_projects as up
+WHERE project_id=p.id
+ORDER by project_id*/
 
 //TODO continue here
-function getProjectList(id) {
-  return db("projects as p")
-  .select("p.name as project_name", "p.due_date")
-    .join("users as u")
-    .where({ 'u.id': id });
+async function getProjectList(id) {
+   db("projects as p")
+    .select("p.name as project_name", "p.due_date", "id as user_id", "up.project_id as project_id")
+    .join("users as u", "users_projects as up")
+    .where({ "project_id": "p.id" })
+    .orderBy('project_id')
 }
 
 // returns a list of messages for a user
@@ -51,13 +54,13 @@ function findById(id) {
 }
 
 // CREATE PROJECT
- function add(project) {
+function add(project) {
   db('projects').insert(project)
-  .then(ids => {
-    return findById(ids[0]);
-  });
+    .then(ids => {
+      return findById(ids[0]);
+    });
 }
- 
+
 
 function remove(id) {
   return db("projects").where({ id }).first().del();

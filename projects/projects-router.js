@@ -19,28 +19,41 @@ router.get("/projects", (req, res) => {
         res
           .status(404)
           .json({ message: "Could not find project for given project" });
+
       }
 
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Failed to get users's projects" });
     });
+
+
+
+  })
+
+
   // GET Projects by user id
-  router.get("/users/:id/projects",  (req, res) => {
+  router.get("/users/:id/projects", async (req, res) => {
     const { id } = req.params;
 
-     Projects.getProjectList(id)
+    await Projects.getProjectList(id)
       .then((users) => {
         if (users) {
           console.log("getProjectList - if");
 
-          res.status(200).json(users);
+
+          return res.status(200).json(users);
         } else {
           console.log("getProjectList - else");
 
-          res
+          return res
             .status(404)
-            .json({ message: "Could not find project for given project" });
+            .json({ message: "Could not find project for given user" });
         }
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).json({ message: "Failed to get users's projects" });
       });
 
@@ -70,6 +83,6 @@ router.get("/projects", (req, res) => {
 
 
 
-});
+
 
 module.exports = router;

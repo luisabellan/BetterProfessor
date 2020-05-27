@@ -18,32 +18,6 @@ function findById(id) {
     return db('users').where({ id }).first();
 }
 
-// returns a list of all projects and quantities for a given user
-
-/* SELECT  i.name as project_name, i.quantity 
-FROM [user] AS r
-JOIN [project] AS i; */
-
-function getProjectsList(user_id) {
-    return db('users as u')
-    .join('projects as p')
-    .select('p.name as project_name', 'p.due_date', 'p.users_ids')
-    .where({'u.id': user_id})
-    
-}
-
-// returns a list of reminders by reminder messages for preparing a user
-/* SELECT r.id, s.messages 
-FROM [user] AS r
-JOIN [reminder] AS s
-ON r.id = s.id; */
-
-function getReminders(user_id) {
-    return db('users as u')
-    .select('r.message', 'r.date', 'r.time')
-    .join('reminder as r', 'u.id', 'r.id')
-    .where({'u.id': user_id})
-}
 
 
 // CREATE USER
@@ -82,7 +56,6 @@ async function validateUser(id) {
 
 module.exports = {
     getUsers,
-    getProjectsList,
     findById, 
     add,
     remove,
