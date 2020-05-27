@@ -1,4 +1,4 @@
-const db = require("../data/dbConfig.js");
+const db = require('../data/dbConfig.js');
 
 
 
@@ -13,50 +13,56 @@ function getProjects() {
 // resolves to  Resolve to a single user object (or null)
 
 function findById(id) {
-  return db("projects").where({ id }).first();
+  return db('projects').where({ id }).first();
 }
 
 // returns a list of all projects and due_dates for a given user
 
-/* SELECT p.name as project_name, p.due_date, up.user_id as user_id, up.project_id as project_id
-FROM projects as p
-JOIN users as u, users_projects as up
-WHERE project_id=p.id AND  user_id = 2
-ORDER by project_id */
+/* SELECT p.name as project_name, p.due_date, u.id as user_id, p.id as project_id
+FROM  users as u
+JOIN projects as p
+on  project_id = p.id
+JOIN users_projects as up
+on  user_id = u.id
 
-// new one
-/* 
-function getProjectList(id) {
-  return db("projects as p")
-  .select("p.name as project_name", "p.due_date", "up.user_id as user_id", "up.project_id as project_id")
-  .join("users as u", "users_projects as up")
-  .where({ 'u.id': id })
-  .orderBy("project_id"); 
-} */
+ORDER by project_name DESC */
 
 //TODO continue here
 function getProjectList(id) {
-  return db("projects as p")
+  return db('projects as p')
+    .join('users_projects as up', 'up.id', 'p.id')
+    .join('users as u', 'u.id', )
     .select(
-      "p.name as project_name",
-      "p.due_date",
-      "up.project_id as project_id",
-      "up.user_id as user_id")
-    .join("users_projects as up")
-    .join("users as u")
+      'p.name as project_name',
+      'p.due_date',
+      'up.project_id as project_id',
+      'up.user_id as user_id')
+    .from('users')
+    .whereNull('project_name')
     .where({
       'u.id': id,
-      
+
 
     }).andWhere({
-      
+
       //'p.id' : 'project_id'
 
     })
-  .orderBy("u.id")
+    .orderBy('p.name', 'desc')
+
 
 
 }
+// new one
+/* 
+function getProjectList(id) {
+  return db('projects as p')
+  .select('p.name as project_name', 'p.due_date', 'up.user_id as user_id', 'up.project_id as project_id')
+  .join('users as u', 'users_projects as up')
+  .where({ 'u.id': id })
+  .orderBy('project_id'); 
+} */
+
 
 // returns a list of messages for a user
 /* SELECT r.id, s.message 
@@ -65,10 +71,10 @@ JOIN [reminder] AS r
 ON u.id = r.id; */
 
 function getMessages(user_id) {
-  return db("user as u")
-    .select("r.id", "r.message")
-    .join("reminders as r", "u.id", "r.id")
-    .where({ "u.id": user_id });
+  return db('user as u')
+    .select('r.id', 'r.message')
+    .join('reminders as r', 'u.id', 'r.id')
+    .where({ 'u.id': user_id });
 }
 
 
@@ -88,14 +94,14 @@ function add(project) {
 
 
 function remove(id) {
-  return db("projects").where({ id }).first().del();
+  return db('projects').where({ id }).first().del();
 }
 // returns  all users in the system that utilize a single project
 // TODO: Not working right now
 function getUsersWithProjects(id) {
-  const users = db("p.name as project_name", "u.name  as user_name")
-    .join("project as p")
-    .select("p.name as project_name", "u.name as user_name");
+  const users = db('p.name as project_name', 'u.name  as user_name')
+    .join('project as p')
+    .select('p.name as project_name', 'u.name as user_name');
 
   return users.where({ 'user.id': id });
 
