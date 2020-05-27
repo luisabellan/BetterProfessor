@@ -30,26 +30,18 @@ ORDER by project_name DESC */
 //TODO continue here
 function getProjectList(id) {
   return db('projects as p')
-    .join('users_projects as up', 'up.id', 'p.id')
-    .join('users as u', 'u.id', )
     .select(
       'p.name as project_name',
       'p.due_date',
       'up.project_id as project_id',
       'up.user_id as user_id')
-    .from('users')
-    .whereNull('project_name')
-    .where({
-      'u.id': id,
+    .from('users as u')
+    .join('projects as p', 'project_id','p.id')
+    .join('users_projects as up', 'user_id', 'u.id')
+    .orderBy('project_name', 'desc')
 
 
-    }).andWhere({
-
-      //'p.id' : 'project_id'
-
-    })
-    .orderBy('p.name', 'desc')
-
+   
 
 
 }
