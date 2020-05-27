@@ -22,11 +22,12 @@ function findById(id) {
 FROM [users] AS u
 JOIN [projects] AS p; */
 
-function getProjectList(users_ids) {
+//TODO continue here
+async function getProjectList(id) {
   return db("projects as p")
   .select("p.name as project_name", "p.due_date")
     .join("users as u")
-    .where({ users_ids });
+    .where({ 'u.id': id });
 }
 
 // returns a list of messages for a user
@@ -63,12 +64,12 @@ function remove(id) {
 }
 // returns  all users in the system that utilize a single project
 // TODO: Not working right now
-function getUsersWithProjects(project_id) {
+function getUsersWithProjects(id) {
   const users = db("p.name as project_name", "u.name  as user_name")
     .join("project as p")
     .select("p.name as project_name", "u.name as user_name");
 
-  return users.where({ project_id });
+  return users.where({ 'user.id': id });
 
 
 }

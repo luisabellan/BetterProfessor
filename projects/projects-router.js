@@ -9,7 +9,7 @@ router.get("/projects", (req, res) => {
   console.log("/api/projects")
   Projects.getProjects()
     .then((projects) => {
-      if (projects.length) {
+      if (projects) {
         console.log("getProjects - if");
 
         res.status(200).json(projects);
@@ -22,49 +22,49 @@ router.get("/projects", (req, res) => {
       }
 
     });
-// GET Projects by user id
-router.get("/users/:id/projects", (req, res) => {
-  const { id } = req.params;
+  // GET Projects by user id
+  router.get("/users/:id/projects", async (req, res) => {
+    const { id } = req.params;
 
-  Projects.getUsersWithProjects(id)
-    .then((users) => {
-      if (users.length) {
-        console.log("getUsersWithProjects - if");
+    await Projects.getProjectList(id)
+      .then((users) => {
+        if (users) {
+          console.log("getProjectList - if");
 
-        res.status(200).json(users);
-      } else {
-        console.log("getUsersWithProjects - else");
+          res.status(200).json(users);
+        } else {
+          console.log("getProjectList - else");
 
-        res
-          .status(404)
-          .json({ message: "Could not find project for given project" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to get users's projects" });
-    });
+          res
+            .status(404)
+            .json({ message: "Could not find project for given project" });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "Failed to get users's projects" });
+      });
+
+
+
+  });
+
+  /* 
+  // CREATE PROJECT
+  router.post('/projects', (req, res) => {
+    const projectData = req.body;
   
-
-
-  });
-
-/* 
-// CREATE PROJECT
-router.post('/projects', (req, res) => {
-  const projectData = req.body;
-
-  Projects.add(projectData)
-  .then(project => {
-  console.log("POST /api/projects - added")
-
-    res.status(201).json(project);
-  })
-  .catch (err => {
-  console.log("POST /api/projects - error")
-
-    res.status(500).json({ message: 'Failed to create new project' });
-  });
-}); */
+    Projects.add(projectData)
+    .then(project => {
+    console.log("POST /api/projects - added")
+  
+      res.status(201).json(project);
+    })
+    .catch (err => {
+    console.log("POST /api/projects - error")
+  
+      res.status(500).json({ message: 'Failed to create new project' });
+    });
+  }); */
 
 
 
