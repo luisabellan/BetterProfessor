@@ -46,13 +46,16 @@ function getProjectList(id) {
     .join("users as u")
     .where({
       'u.id': id,
+      
+
+    }).andWhere({
+      
+      //'p.id' : 'project_id'
 
     })
-  orderBy("project_id");
-  /*  .andWhere({
-    'p.id':'p.id'
+  .orderBy("u.id")
 
-   }); */
+
 }
 
 // returns a list of messages for a user
