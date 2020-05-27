@@ -2,7 +2,7 @@
 exports.up = function (knex) {
     return knex.schema
         .createTable('users', tbl => {
-            tbl.increments('userId')
+            tbl.increments()
             tbl.string('username', 128)
                 .unique()
                 .notNullable()
@@ -13,7 +13,7 @@ exports.up = function (knex) {
             tbl.string('email_address', 128)
                 .unique()
                 .notNullable()
-            
+
             tbl.enum("role", ["student", "mentor"])
                 .notNull()
                 .defaultTo("student")
@@ -25,13 +25,7 @@ exports.up = function (knex) {
                 .notNullable()
             tbl.date('due_date')
                 .notNullable()
-            tbl.enum('user_id', [])
-                .unique()
-                .unsigned()
-                .references('id')
-                .inTable('users')
-                .onUpdate('CASCADE')
-                .onDelete('CASCADE')
+           
 
 
         })
@@ -44,26 +38,28 @@ exports.up = function (knex) {
                 .notNullable
             tbl.time('time')
                 .notNullable
-            tbl.integer('user_id')
-                .unsigned()
-                .notNullable()
-                .references('id')
-                .inTable('users')
-                .onUpdate('CASCADE')
-                .onDelete('CASCADE')
+     
         })
 
         .createTable('users_projects', tbl => {
+
             tbl.integer('user_id')
                 .unsigned()
                 .references('id')
                 // this table must exist already
                 .inTable('users')
+                .onUpdate('CASCADE')
+                .onDelete('CASCADE')
+
+
             tbl.integer('project_id')
+                .notNullable()
                 .unsigned()
                 .references('id')
                 // this table must exist already
                 .inTable('projects')
+                .onUpdate('CASCADE')
+                .onDelete('CASCADE')
 
             // the combination of the two keys becomes our primary key
             // will enforce unique combinations of ids

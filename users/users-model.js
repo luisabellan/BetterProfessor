@@ -56,6 +56,7 @@ async function add(user) {
 
 //UPDATE USER
 async function update(id, data) {
+    //validateUser(id)
     await db("users").where({ id }).first().update(data);
     return findById(id);
   }
@@ -63,7 +64,8 @@ async function update(id, data) {
 async function validateUser(id) {
     findById(id)
       .then((user) => {
-        if (user.length === 0) {
+        if (!user) {
+          console.log(user)
           return res.status(404).json({
             message: "The user with the specified ID does not exist.",
           });

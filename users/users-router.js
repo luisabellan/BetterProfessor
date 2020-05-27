@@ -79,18 +79,19 @@ router.post('/users/:id/reminders', (req, res) => {
 
 // UPDATE USER
 router.put("/users/:id", (req, res) => {
-  if (!req.body.username) {
-    return res.status(400).json({
-      errorMessage: "Please provide username for the user.",
-    });
-  }
-  if (!req.body.role) {
+  Users.findById(req.params.id)
+  .then((user) => {
+    if (!user) {
+      console.log(user)
+      return res.status(404).json({
+        message: "The user with the specified ID does not exist.",
+      });
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-    req.body.role = "student"
-
-  }
-
-  Users.validateUser(req.params.id)
 
   Users.update(req.params.id, req.body)
     .then((user) => {
@@ -116,7 +117,7 @@ router.put("/users/:id", (req, res) => {
 router.delete('/users/:id', (req, res, next) => {
   Users.validateUser(req.params.id)
   Users.remove(req.params.id)
-    .then((res) => res.status(204).end())
+    .then(() => res.status(204).end())
     .catch((err) => next(err))
 })
 
