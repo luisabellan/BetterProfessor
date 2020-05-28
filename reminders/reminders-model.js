@@ -1,5 +1,6 @@
 
 const db = require('../data/dbConfig.js');
+const Users = require('../users/users-model');
 
 /* // returns  all recipes in the system that utilize a single ingredient 
 // TODO: Not working right now
@@ -27,29 +28,20 @@ function getMessages(user_id) {
 }
 
 function getReminders() {
-  return db('reminders as r')
-    .select('r.message', 'r.date', 'r.time', 'r.user_id')
-      /* .join('users as u', 'r.id', 'u.id')  
-    .where({ 'r.user_id' : id }) */
+  return db('reminders')
 }
-// returns a list of reminder by reminder messages for preparing a user
+// returns a list of reminder s and user information 
 /* SELECT r.id, r.message, r.date, r.time 
 FROM [reminder] AS r
 JOIN [users] AS u
 ON r.id = u.id; */
 
-function getRemindersById() {
-  const {id} = req.params.id
-  return db('reminders as r')
-    .select('r.message', 'r.date', 'r.time', 'r.user_id')
-      /* .join('users as u', 'r.id', 'u.id')  
-    .where({ 'r.user_id' : id }) */
+function getRemindersById(id) {
+  return db('reminders as r').where({ 'r.user_id' : id }) 
 }
 
 function deleteReminder(id) {
-  return db('reminders as r')
-    .select('r.message', 'r.date', 'r.time')
-    .where({ 'r.id': r.id }).del()
+  return db('reminders').where({ 'id': id }).first().del()
 }
 
 
@@ -59,6 +51,16 @@ async function addReminder(reminder) {
   .then(ids => {
     return Users.findById(ids[0]);
   });
+}
+
+// resolves to  Resolve to a single user object (or null)
+
+function findById(id) {
+  return db('reminders').where({ id }).first();
+}
+// UPDATE REMINDER
+function updateReminder(data,id){
+  return db('reminders').where({id}).first().update(data)
 }
 
 
@@ -73,7 +75,9 @@ module.exports = {
   deleteReminder,
   getReminders,
   getRemindersById,
-  getMessages
+  getMessages,
+  updateReminder,
+  findById
 
 }
 

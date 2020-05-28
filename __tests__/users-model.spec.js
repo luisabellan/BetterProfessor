@@ -67,7 +67,7 @@ describe("user-model.js", () => {
       username: "Paul",
       password: "abc123",
       name: "Paul Smith",
-      email_address: "paul@gmail.com"
+      email_address: "paul@gmail.com",
       role: "admin",
     };
 

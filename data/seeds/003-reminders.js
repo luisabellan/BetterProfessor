@@ -9,27 +9,37 @@ exports.seed = function (knex, Promise) {
         {
           message: "exam next monday",
           send_date: "2016-03-07",
-          time:"08:00:00"  
+          time:"08:00:00",
+          user_id: 2
         },
         {
           message: "bring your dictionary",
           send_date: "2016-03-07",
-          time:"08:00:00"  
+          time:"08:00:00",
+          user_id: 1
+
+          
         },
         {
           message: "did you copy the text?",
           send_date: "2016-03-07",
-          time:"08:00:00"  
+          time:"08:00:00",
+          user_id: 4
+
         },
         {
           message: "you're doing very well Stephanie! Keep up the good work!",
           send_date: "2016-03-07",
-          time:"08:00:00" 
+          time:"08:00:00",
+          user_id: 5
+
         },
         {
           message: "exam next monday",
           send_date: "2016-03-07",
-          time:"08:00:00"
+          time:"08:00:00",
+          user_id: 3
+
         },
         
 

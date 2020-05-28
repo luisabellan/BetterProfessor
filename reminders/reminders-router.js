@@ -7,18 +7,31 @@ const router = express.Router();
 
 // Returns reminders for all users (ordered by user_id)
 // GET REMINDERS
-//GET /api/users/reminders
+//GET /api/reminders
  router.get('/reminders', (req, res) => {
-  Reminders.getRemindersById(id)
-  .then(users => {
-    res.status(200).json(users);
+  Reminders.getReminders()
+  .then(reminders => {
+    res.status(200).json(reminders);
   })
   .catch(err => {
-    res.status(500).json({ message: 'Failed to get users' });
+    res.status(500).json({ message: 'Failed to get reminders' });
   });
 });
  
+// Returns reminders by user id
+// GET REMINDERS
+//GET /api/users/:id/reminders
+router.get('/users/:id/reminders', (req, res) => {
+  const {id} = req.params
 
+  Reminders.getRemindersById(id)
+  .then(reminders => {
+    res.status(200).json(reminders);
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get reminders' });
+  });
+});
 
 
 
@@ -26,9 +39,16 @@ const router = express.Router();
 // CREATE REMINDER BY USER ID
 //POST /api/users/:id/reminders
 
-router.post('/:id/reminders', (req, res) => {
-  const reminderData = req.body;
-  const { id } = req.params; 
+router.post('/users/:id/reminders', (req, res) => {
+  
+  
+ 
+const reminderData  = {
+  message:req.paramsmessage,
+  send_date:req.paramssend_date,
+  time:req.paramstime,
+  user_id: req.params.id
+}
 
   Users.findById(id)
   .then(user => {
@@ -45,12 +65,43 @@ router.post('/:id/reminders', (req, res) => {
     res.status(500).json({ message: 'Failed to create new reminder' });
   });
 });
+// UPDATE REMINDER BY USER ID
+//UPDATE /api/users/:id/reminders
+
+router.put('/reminders/:id/', (req, res) => {
+  
+  const changes= {
+    message: req.body.message,
+    send_date: req.body.send_date,
+    time:req.body.time,
+    user_id:req.body.user_id
+
+  }
+ 
+
+  const {id} = req.params
+  
+    Reminders.findById(id)
+    .then(reminder => {
+      if (reminder) {
+        Reminders.updateReminder(changes, id)
+        .then(reminder => {
+          res.status(201).json(reminder);
+        })
+      } else {
+        res.status(404).json({ message: 'Could not find reminder with given id.' })
+      }
+    })
+    .catch (err => {
+      res.status(500).json({ message: 'Failed to create new reminder' });
+    });
+  });
 
 // DELETE REMINDER
-router.delete('/:id', (req, res) => {
+router.delete('/reminders/:id/', (req, res) => {
   const { id } = req.params;
 
-  Reminders.remove(id)
+  Reminders.deleteReminder(id)
   .then(deleted => {
     if (deleted) {
       res.json({ removed: deleted });
@@ -63,8 +114,8 @@ router.delete('/:id', (req, res) => {
   });
 });
 
-//TODO delete message
-router.delete('/:user_id/message/:message_id', (req, res) => {
+/* //TODO delete message
+router.delete('/users/user_id/message/:message_id', (req, res) => {
   const { user_id, message_id } = req.params;
 
   Users.deleteMessage(id)
@@ -78,7 +129,7 @@ router.delete('/:user_id/message/:message_id', (req, res) => {
   .catch(err => {
     res.status(500).json({ message: 'Failed to delete message' });
   });
-});
+}); */
 
 
 module.exports = router;

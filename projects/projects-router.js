@@ -1,12 +1,12 @@
 const express = require("express");
 
-const Projects = require("./projects-model.js");
+const Projects = require("./projects-model");
 
 const router = express.Router();
 
 // GET /api/projects
-router.get("/projects", (req, res) => {
-  console.log("/api/projects")
+router.get("/projects/", async (req, res) => {
+  console.log("/api/projects/")
   Projects.getProjects()
     .then((projects) => {
       if (projects) {
@@ -30,14 +30,13 @@ router.get("/projects", (req, res) => {
 
 
 
-  })
+})
 
 
-  // GET Projects by user id
-  router.get("/users/:id/projects", async (req, res) => {
-    const { id } = req.params;
-
-     Projects.getProjectList(id)
+// GET Projects and user information
+router.get("/projects/users", async (req, res) => {
+  try {
+    Projects.getProjectList()
       .then((users) => {
         if (users) {
           console.log("getProjectList - if");
@@ -57,36 +56,60 @@ router.get("/projects", (req, res) => {
         res.status(500).json({ message: "Failed to get users's projects" });
       });
 
+  } catch (error) {
+    console.log(error)
 
-
-  });
-
-  // CREATE -  POST  -
-router.post("/projects",  (req, res) => {
-   if (!req.body.name || !req.body.due_date) {
-    console.log(res.body)
-     return res.status(400).json({
-      errorMessage: "Please provide name and due_date for the project.",
-    });
-  } 
-  
-
-   Projects.create(req.body, req.params.id)
-    .then((project) => {
-    return  res.status(201).json(project);
+    return res.status(500).json({
+      error: "There was an error while saving the comment to the database",
     })
-    .catch((error) => {
-      console.log(error);
-      return res.status(500).json({
-        error: "There was an error while saving the project to the database",
-      });
-    });
+
+  }
+
+
+})
+
+
+// DELETE PROJECT
+router.delete('/projects/:id', (req, res) => {
+  const { id } = req.params;
+
+  Projects.remove(id)
+  .then(deleted => {
+    if (deleted) {
+      res.json({ removed: deleted });
+    } else {
+      res.status(404).json({ message: 'Could not find reminder with given id' });
+    }
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to delete reminder' });
+  });
 });
 
+// CREATE PROJECT
 
+router.post('/projects',  (req, res) => {
 
+  let {name, due_date} = req.body 
 
+  if (!name || !due_date) {
+    res.status(400).json({ "message": "Please input a project name and a due date" })
+  }
+  const project = req.body
+  project = {
+    name: project.name, 
+    due_date: project.due_date,
+    user_id: project.user_id
+  } 
 
+   Projects.create(project)
+    .then(project => {
+      res.status(201).json(project);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to create new project' });
+    });
+});
 
 
 

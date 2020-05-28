@@ -10,11 +10,6 @@ function getProjects() {
 
 }
 
-// resolves to  Resolve to a single user object (or null)
-
-function findById(id) {
-  return db('projects').where({ id }).first();
-}
 
 // returns a list of all projects and due_dates for a given user
 
@@ -27,8 +22,7 @@ on  user_id = u.id
 
 ORDER by project_name DESC */
 
-//TODO continue here
-function getProjectList(id) {
+function getProjectList() {
   return db('projects as p')
     .select(
       'p.name as project_name',
@@ -39,9 +33,6 @@ function getProjectList(id) {
     .join('projects as p', 'project_id', 'p.id')
     .join('users_projects as up', 'user_id', 'u.id')
     .orderBy('project_name', 'desc')
-
-
-
 
 
 }
@@ -71,14 +62,25 @@ function getUsersWithProjects(id) {
 
 
 // CREATE PROJECT
- function create(project) {
-   db('projects').insert(project)
+  function create(project) {
+
+   let {name, due_date} = project
+
+
+     db('projects').insert(
+    {
+      name : project.name,
+      due_date: project.due_date
+    }
+   )
+
   .then(ids => {
+    console.log(ids)
     return findById(ids[0]);
   })
   .catch((err)=>{
 
-    console.log(err)
+   return console.log(err)
 
   })
 }

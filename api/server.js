@@ -2,9 +2,10 @@ const express = require("express");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const authRouter = require("../auth/auth-router.js");
+const authRouter = require("../auth/auth-router");
 const usersRouter = require("../users/users-router");
 const projectsRouter = require("../projects/projects-router");
+const remindersRouter = require("../reminders/reminders-router");
 //const jokesRouter = require('../jokes/jokes-router.js');
 const dotenv = require("dotenv");
 
@@ -22,6 +23,7 @@ server.use(
   })
 );
 
+server.use("/api/", remindersRouter);
 server.use("/api/users", usersRouter);
 server.use("/api/auth", authRouter);
 server.use("/api/", projectsRouter);

@@ -5,28 +5,27 @@ exports.up = function (knex) {
             tbl.increments()
             tbl.string('username', 128)
                 .unique()
-                .notNullable()
+                .notNullable();
             tbl.text('password')
-                .notNullable()
+                .notNullable();
             tbl.string('name', 128)
-                .notNullable()
+                .notNullable();
             tbl.string('email_address', 128)
                 .unique()
-                .notNullable()
+                .notNullable();
 
             tbl.enum("role", ["student", "mentor"])
                 .notNull()
-                .defaultTo("student")
+                .defaultTo("student");
         })
         .createTable('projects', tbl => {
 
             tbl.increments()
             tbl.string('name', 128)
-            .unique()
-            .notNullable()
+                .unique()
+                .notNullable()
             tbl.date('due_date')
-            .unique()
-            .notNullable()
+                .notNullable()
 
 
 
@@ -40,6 +39,13 @@ exports.up = function (knex) {
                 .notNullable
             tbl.time('time')
                 .notNullable
+            tbl.integer('user_id')
+                .unsigned()
+                .references('id')
+                // this table must exist already
+                .inTable('users')
+                .onUpdate('CASCADE')
+                .onDelete('CASCADE')
 
         })
 
@@ -47,15 +53,15 @@ exports.up = function (knex) {
 
 
             tbl.integer('project_id')
-            .unsigned()
-            .notNullable()
-            .references('id')
-            // this table must exist already
-            .inTable('projects')
-            .onUpdate('CASCADE')
-            .onDelete('CASCADE')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                // this table must exist already
+                .inTable('projects')
+                .onUpdate('CASCADE')
+                .onDelete('CASCADE')
 
-            
+
             tbl.integer('user_id')
                 .unsigned()
                 .references('id')
@@ -65,7 +71,7 @@ exports.up = function (knex) {
                 .onDelete('CASCADE')
 
 
-          
+
 
             // the combination of the two keys becomes our primary key
             // will enforce unique combinations of ids
@@ -79,8 +85,8 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-    .dropTableIfExists('users_projects')
-    .dropTableIfExists('reminders')
-    .dropTableIfExists('projects')
+        .dropTableIfExists('users_projects')
+        .dropTableIfExists('reminders')
+        .dropTableIfExists('projects')
         .dropTableIfExists('users')
 }
