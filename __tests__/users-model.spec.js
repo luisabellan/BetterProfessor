@@ -5,12 +5,12 @@
 */
 const request = require("supertest"); // calling it "request" is a common practice
 
-const server = require("../api/server");
+const server = require("../index");
 const db = require("../data/dbConfig");
 
 beforeEach(async () => {
   await db("users").truncate();
-  await db.seed.run();
+  //await db.seed.run();
 });
 
 afterAll(async () => {
@@ -25,7 +25,7 @@ describe("user-model.js", () => {
       password: "abc123",
       name: "Paul Smith",
       email_address: "paul@gmail.com",
-      role: "admin",
+      role: "mentor",
     };
 
     await db("users").insert(data);
@@ -38,7 +38,7 @@ describe("user-model.js", () => {
       password: "abc123",
       name: "Paul Smith",
       email_address: "paul@gmail.com",
-      role: "admin",
+      role: "mentor",
     });
   });
 
@@ -49,7 +49,7 @@ describe("user-model.js", () => {
       password: "abc123",
       name: "Paul Smith",
       email_address: "paul@gmail.com",
-      role: "admin",
+      role: "mentor",
 
      
     };
@@ -68,7 +68,7 @@ describe("user-model.js", () => {
       password: "abc123",
       name: "Paul Smith",
       email_address: "paul@gmail.com",
-      role: "admin",
+      role: "mentor",
     };
 
     await db("users").insert(data);
