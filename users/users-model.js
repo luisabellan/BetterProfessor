@@ -1,4 +1,10 @@
-const db = require('../data/db-config.js');
+const db = require('../data/dbConfig.js');
+
+// retrives a user by their username
+function findByUsername(username) { 
+  return db('users').where({ username }).first();
+}
+
 
 //  return a list of all users in the database.
 
@@ -12,35 +18,9 @@ function findById(id) {
     return db('users').where({ id }).first();
 }
 
-// returns a list of all projects and quantities for a given user
-
-/* SELECT  i.name as project_name, i.quantity 
-FROM [user] AS r
-JOIN [project] AS i; */
-
-function getProjectsList(user_id) {
-    return db('user as r')
-    .join('project as i')
-    .select('i.name as project_name', 'i.due_date')
-    .where({'r.id': user_id})
-    
-}
-
-// returns a list of reminders by reminder messages for preparing a user
-/* SELECT r.id, s.messages 
-FROM [user] AS r
-JOIN [reminder] AS s
-ON r.id = s.id; */
-
-function getReminders(user_id) {
-    return db('users as u')
-    .select('r.message', 'r.date', 'r.time')
-    .join('reminder as r', 'u.id', 'r.id')
-    .where({'u.id': user_id})
-}
 
 
-
+// CREATE USER
 async function add(user) {
     await db('users').insert(user)
     .then(ids => {
@@ -50,6 +30,7 @@ async function add(user) {
 
 //UPDATE USER
 async function update(id, data) {
+    //validateUser(id)
     await db("users").where({ id }).first().update(data);
     return findById(id);
   }
@@ -57,7 +38,8 @@ async function update(id, data) {
 async function validateUser(id) {
     findById(id)
       .then((user) => {
-        if (user.length === 0) {
+        if (!user) {
+          console.log(user)
           return res.status(404).json({
             message: "The user with the specified ID does not exist.",
           });
@@ -68,18 +50,16 @@ async function validateUser(id) {
       });
   }
 
-function remove(id) {
-    return db('users').where({id}).first().del()
-
-}
+  function remove(id) {
+    return db("users").where({ id }).delete()
+  }
 
 module.exports = {
     getUsers,
-    getProjectsList,
-    getReminders,
     findById, 
     add,
     remove,
     validateUser,
-    update
+    update,
+    findByUsername
 }
