@@ -6,7 +6,7 @@ exports.seed = function(knex, Promise) {
       // add data into insert
       return knex('users').insert([
         
-        { 
+       /*  { 
           username: 'patrick',
           password:'abc123',
           name:"Patrick O'Connor",
@@ -45,7 +45,7 @@ exports.seed = function(knex, Promise) {
           role:'student',
           email_address:'steph@gmail.com'
 
-        },
+        }, */
        
       ]);
     });
