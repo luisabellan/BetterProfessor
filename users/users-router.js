@@ -1,11 +1,12 @@
 const express = require('express');
 
 const Users = require('./users-model.js');
+const restrict = require("../auth/authenticate-middleware");
 
 const router = express.Router();
 
 // all users (without details about projects or reminders)
-router.get('/', (req, res) => {
+router.get('/', restrict(), (req, res) => {
 console.log(req.body)
   Users.getUsers()
     .then(users => {
@@ -17,8 +18,8 @@ console.log(req.body)
     });
 });
 
-// /api/users/:id/projects
-
+// /api/users/:id/
+// GET /api/users/:id/ users by id
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
@@ -42,7 +43,7 @@ router.get('/:id', (req, res) => {
 
 
  // CREATE USER - This is now done from /api/auth/register
-
+/* 
 router.post('/', (req, res) => {
   console.log(req.body)
   const userData = req.body;
@@ -55,7 +56,8 @@ router.post('/', (req, res) => {
     res.status(500).json({ message: 'Failed to create new user' });
   });
 }); 
-
+ */
+// GET reminders
 router.post('/:id/reminders', (req, res) => {
   const reminderData = req.body;
   const { id } = req.params;
@@ -87,10 +89,6 @@ router.put("/:id",   (req, res) => {
 		next(error);
 	  });
   });
-
-
-
-
 
 
 
