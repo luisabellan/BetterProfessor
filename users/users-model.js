@@ -49,7 +49,7 @@ async function validateUser(id) {
         console.log(error);
       });
   }
-
+// DELETE USER
   function remove(id) {
     return db("users").where({ id }).delete()
   }
