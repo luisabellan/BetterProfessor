@@ -43,7 +43,7 @@ router.get('/:id', restrict(), (req, res) => {
 
 
  // CREATE USER - This is now done from /api/auth/register
-/* 
+/*
 router.post('/', (req, res) => {
   console.log(req.body)
   const userData = req.body;
@@ -55,7 +55,7 @@ router.post('/', (req, res) => {
   .catch (err => {
     res.status(500).json({ message: 'Failed to create new user' });
   });
-}); 
+});
  */
 // GET reminders
 router.post('/:id/reminders', (req, res) => {
@@ -82,10 +82,10 @@ router.post('/:id/reminders', (req, res) => {
 // UPDATE USER
 // /api/users/:id/
 // UPDATE /api/users/:id/ users by id
-router.put("/:id",restrict(), (req, res) => {
+router.put("/:id", (req, res) => {
 	Users.update(req.params.id, req.body)
 	  .then((user) => {
-		res.status(200).json(user);
+		res.status(201).json(user);
 	  })
 	  .catch((error) => {
 		next(error);

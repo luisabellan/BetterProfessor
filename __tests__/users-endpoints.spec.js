@@ -11,6 +11,8 @@ afterAll(async () => {
   await db.destroy();
 });
 
+
+
 describe("users integration tests", () => {
   //CREATE USER
   it("POST /api/auth/register", async () => {
@@ -54,7 +56,7 @@ describe("users integration tests", () => {
   //LOGIN USER
   it("POST /api/auth/login", async () => {
     const data = {
-   
+
       username: "Jake",
       password: "abc123",
 
@@ -66,7 +68,7 @@ describe("users integration tests", () => {
     credentials.password = hash;
 
     const res = await supertest(server).post("/api/auth/login").send(data);
-   
+
 
     // find the user in the database by its username then
     let user = db("users").where({ username: data.username }).first();
@@ -84,13 +86,35 @@ describe("users integration tests", () => {
 
   // UPDATE USER
   it("UPDATE /api/users/:id", async () => {
+
     const data = {
       username: "Viktor",
     };
     let id = 1;
+    const login = {
+
+      username: "Jake",
+      password: "abc123",
+
+    };
+
+    const credentials = login;
+    const hash = bcrypt.hashSync(credentials.password, 14);
+
+    credentials.password = hash;
+
+    const res = await supertest(server).post("/api/auth/login").send(login);
+
+
+    // find the user in the database by its username then
+    let user = db("users").where({ username: login.username }).first();
+    if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
+      return console.log("Incorrect credentials");
+    }
+
     const result = await supertest(server).put(`/api/users/${id}`).send(data);
     expect(result.type).toBe("application/json");
-    expect(statusCode).toBe(201);
+    expect(status).toBe(201);
   });
 
   it("GET /api/users", async () => {
@@ -104,6 +128,28 @@ describe("users integration tests", () => {
     };
 
     await db("users").insert(data); */
+
+    const login = {
+
+      username: "Jake",
+      password: "abc123",
+
+    };
+
+    const credentials = login;
+    const hash = bcrypt.hashSync(credentials.password, 14);
+
+    credentials.password = hash;
+
+     await supertest(server).post("/api/auth/login").send(login);
+
+
+    // find the user in the database by its username then
+    let user = db("users").where({ username: login.username }).first();
+    if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
+      return console.log("Incorrect credentials");
+    }
+
     const res = await supertest(server).get("/api/users");
     expect(res.statusCode).toBe(200);
     expect(res.type).toBe("application/json");
@@ -114,7 +160,7 @@ describe("users integration tests", () => {
 
   it("GET /api/users/:id", async () => {
     let data = {
-      id: 1,
+      id: 2,
       username: "Paul",
       password: "abc123",
       name: "Paul Smith",
@@ -124,8 +170,30 @@ describe("users integration tests", () => {
 
     await db("users").insert(data);
 
-    let id = 1;
+    let id = 2;
     let result;
+
+    const login = {
+
+      username: "Jake",
+      password: "abc123",
+
+    };
+
+    const credentials = login;
+    const hash = bcrypt.hashSync(credentials.password, 14);
+
+    credentials.password = hash;
+
+    await supertest(server).post("/api/auth/login").send(login);
+
+
+    // find the user in the database by its username then
+    let user = db("users").where({ username: login.username }).first();
+    if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
+      return console.log("Incorrect credentials");
+    }
+
     result = await supertest(server).get(`/api/users/${id}`);
 
     expect(result.body).toEqual({
@@ -142,6 +210,26 @@ describe("users integration tests", () => {
     let id = 5000;
     const expectedStatusCode = 404;
     let res;
+    const login = {
+
+      username: "Jake",
+      password: "abc123",
+
+    };
+
+    const credentials = login;
+    const hash = bcrypt.hashSync(credentials.password, 14);
+
+    credentials.password = hash;
+
+    await supertest(server).post("/api/auth/login").send(login);
+
+
+    // find the user in the database by its username then
+    let user = db("users").where({ username: login.username }).first();
+    if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
+      return console.log("Incorrect credentials");
+    }
     res = await supertest(server).get(`/api/users/${id}`);
     expect(res.status).toEqual(expectedStatusCode);
     expect(res.username).toBe(undefined);
