@@ -9,7 +9,7 @@ const projectsRouter = require("./projects/projects-router");
 const remindersRouter = require("./reminders/reminders-router");
 //const jokesRouter = require('../jokes/jokes-router.js');
 
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 const server = express();
 
 server.use(helmet());
