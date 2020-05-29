@@ -40,16 +40,18 @@ router.get('/users/:id/reminders', (req, res) => {
 //POST /api/users/:id/reminders
 
 router.post('/reminders', async (req, res) => {
+  console.log('here',req.body)
   
   
- 
-const reminderData  = {
-  message:req.body.message,
-  send_date:req.body.send_date,
-  time:req.body.time,
-  user_id: req.body.user_id
-}
-
+  
+  const reminderData  = {
+    message:req.body.message,
+    send_date:req.body.send_date,
+    time:req.body.time,
+    user_id: req.body.user_id
+  }
+  console.log(reminderData)
+  
   Users.findById(reminderData.user_id)
   .then(user => {
     if (user) {
