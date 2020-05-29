@@ -1,11 +1,12 @@
 const express = require('express');
 
 const Users = require('./users-model.js');
+const restrict = require("../auth/authenticate-middleware");
 
 const router = express.Router();
 
 // all users (without details about projects or reminders)
-router.get('/', (req, res) => {
+router.get('/', restrict(), (req, res) => {
 console.log(req.body)
   Users.getUsers()
     .then(users => {
@@ -17,9 +18,9 @@ console.log(req.body)
     });
 });
 
-// /api/users/:id/projects
-
-router.get('/:id', (req, res) => {
+// /api/users/:id/
+// GET /api/users/:id/ users by id
+router.get('/:id', restrict(), (req, res) => {
   const { id } = req.params;
 
   Users.findById(id)
@@ -42,7 +43,7 @@ router.get('/:id', (req, res) => {
 
 
  // CREATE USER - This is now done from /api/auth/register
-
+/* 
 router.post('/', (req, res) => {
   console.log(req.body)
   const userData = req.body;
@@ -55,7 +56,8 @@ router.post('/', (req, res) => {
     res.status(500).json({ message: 'Failed to create new user' });
   });
 }); 
-
+ */
+// GET reminders
 router.post('/:id/reminders', (req, res) => {
   const reminderData = req.body;
   const { id } = req.params;
@@ -78,7 +80,9 @@ router.post('/:id/reminders', (req, res) => {
 });
 
 // UPDATE USER
-router.put("/:id",   (req, res) => {
+// /api/users/:id/
+// UPDATE /api/users/:id/ users by id
+router.put("/:id",restrict(), (req, res) => {
 	Users.update(req.params.id, req.body)
 	  .then((user) => {
 		res.status(200).json(user);
@@ -90,12 +94,11 @@ router.put("/:id",   (req, res) => {
 
 
 
-
-
-
-
 // DELETE USER
-router.delete('/:id', (req, res, next) => {
+
+// /api/users/:id/
+// DELETE /api/users/:id/ users by id
+router.delete('/:id', restrict(), (req, res, next) => {
   Users.validateUser(req.params.id)
   Users.remove(req.params.id)
     .then(() => res.status(204).end())

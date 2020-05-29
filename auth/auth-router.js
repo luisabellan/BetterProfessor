@@ -12,7 +12,12 @@ const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
   try {
-    const { username } = req.body;
+    const credentials = req.body;
+
+    const hash = bcrypt.hashSync(credentials.password, 14);
+    credentials.password = hash;
+
+    const { username, password, role } = req.body;
     const user = await userModel.findByUsername(username);
 
     if (user) {
@@ -20,22 +25,22 @@ router.post("/register", async (req, res, next) => {
         message: "Username is already taken",
       });
     }
-    if (!req.body.username) {
+    if (!username) {
       return res.status(400).json({
         errorMessage: "Please provide username for the user.",
       });
     }
-    if (!req.body.password) {
+    if (!password) {
       return res.status(400).json({
         errorMessage: "Please provide password for the user.",
       });
     }
-    if (!req.body.role) {
+    if (!role) {
   
       req.body.role = "student"
   
     }
-    res.status(201).json(await userModel.add(req.body));
+    res.status(201).json(await userModel.add(credentials));
   } catch (err) {
     next(err);
   }
@@ -47,21 +52,20 @@ router.post("/login", async (req, res, next) => {
   };
 
   try {
-    const { username } = req.body;
+    const credentials = req.body
+    const { username, password } = req.body;
 
     const user = await userModel.findByUsername(username);
   
-    if (!user) {
-      return res.status(401).json(authError);
-    }
+  
+// find the user in the database by it's username then
+if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
+  return res.status(401).json({ error: 'Incorrect credentials' });
+}
+    console.log('req.body.password', password)
+    console.log('user.password', user.password)
 
-    const passwordValid = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    if (!passwordValid) {
-      return res.status(401).json(authError);
-    }
+   
 
     // create a new session in the database
     const session = await authModel.add({

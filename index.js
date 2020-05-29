@@ -7,6 +7,8 @@ const authRouter = require("./auth/auth-router");
 const usersRouter = require("./users/users-router");
 const projectsRouter = require("./projects/projects-router");
 const remindersRouter = require("./reminders/reminders-router");
+const restrict = require("./auth/authenticate-middleware");
+
 //const jokesRouter = require('../jokes/jokes-router.js');
 
 const port = process.env.PORT || 4000;
@@ -22,10 +24,10 @@ server.use(
     origin: "http://localhost:3000",
   })
 );
-server.use("/api/", remindersRouter);
-server.use("/api/users", usersRouter);
+server.use("/api/users",restrict('mentor'), usersRouter);
 server.use("/api/auth", authRouter); 
-server.use("/api/projects", projectsRouter);
+server.use("/api/projects",restrict('mentor'), projectsRouter);
+server.use("/api/reminders",restrict('mentor'), remindersRouter);
 
 
 server.get("/", (req, res, next) => {

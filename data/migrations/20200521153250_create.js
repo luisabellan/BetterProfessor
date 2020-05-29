@@ -105,5 +105,5 @@ exports.down = function (knex) {
     .dropTableIfExists('reminders')
     .dropTableIfExists('projects')
     .dropTableIfExists('sessions')
-        .dropTableIfExists('users')
+    .dropTableIfExists('users')
 }

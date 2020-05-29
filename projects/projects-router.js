@@ -8,7 +8,7 @@ const db = require("../data/dbConfig");
 const router = express.Router();
 
 // GET /api/projects
-router.get("/", async (req, res) => {
+router.get("/", restrict(), async (req, res) => {
   console.log("/api/projects/")
   await Projects.getProjects()
     .then((projects) => {
@@ -90,7 +90,7 @@ router.delete('/:id', (req, res) => {
 });
 
 // CREATE PROJECT
-router.post("/", async (req, res, next) => {
+router.post("/",  async (req, res, next) => {
   try {
     console.log(req.body)
     const { name } = req.body;
