@@ -6,7 +6,7 @@ const router = express.Router();
 
 // all users (without details about projects or reminders)
 router.get('/', (req, res) => {
-
+console.log(req.body)
   Users.getUsers()
     .then(users => {
       console.log("/users")
@@ -41,9 +41,10 @@ router.get('/:id', (req, res) => {
 
 
 
-/* // CREATE USER - This is now done from /api/auth/register
+ // CREATE USER - This is now done from /api/auth/register
 
-router.post('/users', (req, res) => {
+router.post('/', (req, res) => {
+  console.log(req.body)
   const userData = req.body;
 
   Users.add(userData)
@@ -53,7 +54,7 @@ router.post('/users', (req, res) => {
   .catch (err => {
     res.status(500).json({ message: 'Failed to create new user' });
   });
-}); */
+}); 
 
 router.post('/:id/reminders', (req, res) => {
   const reminderData = req.body;
@@ -77,34 +78,15 @@ router.post('/:id/reminders', (req, res) => {
 });
 
 // UPDATE USER
-router.put("/:id", (req, res) => {
-  Users.findById(req.params.id)
-  .then((user) => {
-    if (!user) {
-      console.log(user)
-      return res.status(404).json({
-        message: "The user with the specified ID does not exist.",
-      });
-    }
-  })
-  .catch((error) => {
-    console.log(error);
+router.put("/:id",   (req, res) => {
+	Users.update(req.params.id, req.body)
+	  .then((user) => {
+		res.status(200).json(user);
+	  })
+	  .catch((error) => {
+		next(error);
+	  });
   });
-
-
-  Users.update(req.params.id, req.body)
-    .then((user) => {
-      //	console.log(res);
-
-      return res.status(200).json(user);
-    })
-    .catch((error) => {
-      console.log(error);
-      return res.status(500).json({
-        error: "The user information could not be modified.",
-      });
-    });
-})
 
 
 

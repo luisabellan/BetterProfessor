@@ -40,11 +40,17 @@ function getProjectList() {
 
 // resolves to  Resolve to a single project object (or null)
 
+
 function findById(id) {
-  return db('projects').where({ id }).first();
+	return db("projects")
+		.where("id", id)
+		.first()
 }
 
-
+// retrives a project by their name
+function findByProjectName(name) { 
+  return db('projects').where({ name }).first();
+}
 function remove(id) {
   return db('projects').where({ id }).first().del();
 }
@@ -62,29 +68,12 @@ function getUsersWithProjects(id) {
 
 
 // CREATE PROJECT
-  function create(project) {
-
-   let {name, due_date} = project
-
-
-     db('projects').insert(
-    {
-      name : project.name,
-      due_date: project.due_date
-    }
-   )
-
+async function create(project) {
+  await db('projects').insert(project)
   .then(ids => {
-    console.log(ids)
     return findById(ids[0]);
-  })
-  .catch((err)=>{
-
-   return console.log(err)
-
-  })
+  });
 }
-
 
 module.exports = {
   getProjects,
@@ -93,4 +82,5 @@ module.exports = {
   findById,
   remove,
   getUsersWithProjects,
+  findByProjectName
 };

@@ -1,13 +1,16 @@
 const express = require("express");
-
+const dotenv = require("dotenv");
 const Projects = require("./projects-model");
+const restrict = require("../auth/authenticate-middleware");
+const db = require("../data/dbConfig");
+
 
 const router = express.Router();
 
 // GET /api/projects
-router.get("/projects/", async (req, res) => {
+router.get("/", async (req, res) => {
   console.log("/api/projects/")
-  Projects.getProjects()
+  await Projects.getProjects()
     .then((projects) => {
       if (projects) {
         console.log("getProjects - if");
@@ -34,7 +37,7 @@ router.get("/projects/", async (req, res) => {
 
 
 // GET Projects and user information
-router.get("/projects/users", async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     Projects.getProjectList()
       .then((users) => {
@@ -70,7 +73,7 @@ router.get("/projects/users", async (req, res) => {
 
 
 // DELETE PROJECT
-router.delete('/projects/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
   Projects.remove(id)
@@ -87,32 +90,33 @@ router.delete('/projects/:id', (req, res) => {
 });
 
 // CREATE PROJECT
+router.post("/", async (req, res, next) => {
+  try {
+    console.log(req.body)
+    const { name } = req.body;
+    const project = await Projects.findByProjectName(name);
 
-router.post('/projects',  (req, res) => {
-
-  let {name, due_date} = req.body 
-
-  if (!name || !due_date) {
-    res.status(400).json({ "message": "Please input a project name and a due date" })
+    if (project) {
+      return res.status(409).json({
+        message: "That project name is already taken",
+      });
+    }
+    if (!req.body.name) {
+      return res.status(400).json({
+        errorMessage: "Please provide name for the project.",
+      });
+    }
+    if (!req.body.due_date) {
+      return res.status(400).json({
+        errorMessage: "Please provide due_date for the project.",
+      });
+    }
+  
+    res.status(201).json(await Projects.create(req.body));
+  } catch (err) {
+    next(err);
   }
-  const project = req.body
-  project = {
-    name: project.name, 
-    due_date: project.due_date,
-    user_id: project.user_id
-  } 
-
-   Projects.create(project)
-    .then(project => {
-      res.status(201).json(project);
-    })
-    .catch(err => {
-      res.status(500).json({ message: 'Failed to create new project' });
-    });
 });
-
-
-
 
 
 

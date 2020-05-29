@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken")
 const authModel = require("../auth/auth-model")
 const dotenv = require('dotenv')
-const roles = ["normal", "admin"]
 
-function restrict(role = "normal") {
+const roles = ["student", "mentor"]
+
+function restrict(role = "student") {
 	return async (req, res, next) => {
 		const authError = {
 			message: "Invalid credentials",
@@ -17,8 +18,8 @@ function restrict(role = "normal") {
 
 			jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
 				try {
-					// validate role based on a scale, so admins can
-					// still access resources restricted to normal users
+					// validate role based on a scale, so mentors can
+					// still access resources restricted to student users
 					if (err || roles.indexOf(decoded.role) < roles.indexOf(role)) {
 						return res.status(401).json(authError)
 					}

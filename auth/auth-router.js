@@ -5,7 +5,8 @@ const authModel = require("./auth-model");
 const userModel = require("../users/users-model");
 const restrict = require("./authenticate-middleware");
 const db = require("../data/dbConfig");
-const dotenv = require("dotenv");
+const dotenv = require('dotenv')
+
 
 const router = express.Router();
 
@@ -46,7 +47,10 @@ router.post("/login", async (req, res, next) => {
   };
 
   try {
-    const user = await userModel.findByUsername(req.body.username);
+    const { username } = req.body;
+
+    const user = await userModel.findByUsername(username);
+  
     if (!user) {
       return res.status(401).json(authError);
     }
