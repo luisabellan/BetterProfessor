@@ -37,7 +37,7 @@ router.get('/users/:id/reminders', (req, res) => {
 
 
 // CREATE REMINDER BY USER ID
-//POST /api/users/:id/reminders
+//POST /api/reminders
 
 router.post('/reminders', async (req, res) => {
   console.log('here',req.body)

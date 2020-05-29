@@ -52,6 +52,7 @@ router.post("/login", async (req, res, next) => {
     const user = await userModel.findByUsername(username);
   
     if (!user) {
+      console.log('no user', user)
       return res.status(401).json(authError);
     }
 
@@ -59,6 +60,10 @@ router.post("/login", async (req, res, next) => {
       req.body.password,
       user.password
     );
+    console.log('password valid', passwordValid)
+    console.log('req.body.password', req.body.password)
+    console.log('user.password', user.password)
+
     if (!passwordValid) {
       return res.status(401).json(authError);
     }
