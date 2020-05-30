@@ -4,7 +4,7 @@ const db = require("../data/dbConfig");
 const bcrypt = require("bcryptjs");
 
 beforeAll(async () => {
-  await db("remiders").truncate();
+  await db("reminders").truncate();
 });
 
 afterAll(async () => {
@@ -13,7 +13,7 @@ afterAll(async () => {
 
 
 
-describe("remiders integration tests", () => {
+describe("reminders integration tests", () => {
   // //CREATE USER
   // it("POST /api/auth/register", async () => {
   //   const data = {
@@ -83,11 +83,11 @@ describe("remiders integration tests", () => {
 
 
 
-  // UPDATE PROJECT
-  it("UPDATE /api/remiders/:id", async () => {
+  // UPDATE REMINDER
+  it("UPDATE /api/reminders/:id", async () => {
 
     const data = {
-      name: "Dinosaurs",
+      message: "Finish the exercise",
     };
     let id = 1;
     const login = {
@@ -111,22 +111,21 @@ describe("remiders integration tests", () => {
       return console.log("Incorrect credentials");
     }
 
-    const result = await supertest(server).put(`/api/projects/${id}`).send(data);
+    const result = await supertest(server).put(`/api/reminders/${id}`).send(data);
     expect(result.type).toBe("application/json");
     expect(status).toBe(201);
   });
 
-  it("GET /api/projects", async () => {
-/*     let data = {
-     id: 1,
-      username: "Jake",
-      password: "abc123",
-      name: "Jake Smith",
-      email_address: "jake@gmail.com",
-      role: "mentor",
+  it("GET /api/reminders", async () => {
+     let data = {
+       "id": 1,
+      "message": "exam next monday",
+      "send_date": "2016-03-07",
+      "time": "08:00:00",
+      "user_id": 2
     };
 
-    await db("projects").insert(data); */
+    await db("reminders");
 
     const login = {
 
@@ -149,22 +148,25 @@ describe("remiders integration tests", () => {
       return console.log("Incorrect credentials");
     }
 
-    const res = await supertest(server).get("/api/projects");
+    const res = await supertest(server).get("/api/reminders");
     expect(res.statusCode).toBe(200);
     expect(res.type).toBe("application/json");
-    expect(res.body[0].username).toBe("Jake");
-    expect(res.body[0].role).toBe("student");
+    expect(res.body[0].message).toBe("exam next monday");
+    expect(res.body[0].send_date).toBe("2016-03-07");
+    expect(res.body[0].user_id).toBe(2);
     expect(res.body).toHaveLength(1);
   });
 
-  it("GET /api/projects/:id", async () => {
+  it("GET /api/reminders/:id", async () => {
     let data = {
-    "id": 2,
-    "name": "Apples and Pears",
-    "due_date": "2020-07-17"
+      "id": 2,
+      "message": "bring your dictionary",
+      "send_date": "2016-03-07",
+      "time": "08:00:00",
+      "user_id": 1
     };
 
-    await db("projects").insert(data);
+    await db("reminders").where({id:2}).first();
 
     let id = 2;
     let result;
@@ -190,16 +192,18 @@ describe("remiders integration tests", () => {
       return console.log("Incorrect credentials");
     }
 
-    result = await supertest(server).get(`/api/projects/${id}`);
+    result = await supertest(server).get(`/api/reminders/${id}`);
 
     expect(result.body).toEqual({
       "id": 2,
-      "name": "Apples and Pears",
-      "due_date": "2020-07-17"
+      "message": "bring your dictionary",
+      "send_date": "2016-03-07",
+      "time": "08:00:00",
+      "user_id": 1
     });
   });
 
-  it("GET /api/projects/:id (not found)", async () => {
+  it("GET /api/reminders/:id (not found)", async () => {
     let id = 5000;
     const expectedStatusCode = 404;
     let res;
@@ -223,7 +227,7 @@ describe("remiders integration tests", () => {
     if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
       return console.log("Incorrect credentials");
     }
-    res = await supertest(server).get(`/api/users/${id}`);
+    res = await supertest(server).get(`/api/reminders/${id}`);
     expect(res.status).toEqual(expectedStatusCode);
     expect(res.username).toBe(undefined);
     expect(res.type).toBe("application/json");
