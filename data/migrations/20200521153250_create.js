@@ -1,9 +1,11 @@
 exports.up = async function (knex) {
     await knex.schema.createTable('users', tbl => {
-        tbl.increments()
+        tbl.increments();
         tbl.string('username', 128)
             .unique()
-            .notNullable();
+            .notNullable()
+            .onDelete("CASCADE")
+            .onUpdate("CASCADE");
         tbl.text('password')
             .notNullable();
         tbl.string('name', 128)
@@ -15,16 +17,17 @@ exports.up = async function (knex) {
         tbl.enum("role", ["student", "mentor"])
             .notNull()
             .defaultTo("student");
+
     })
 
     await knex.schema.createTable("sessions", (table) => {
-        table.increments()
+        table.increments();
         table.integer("user_id")
             .notNull()
             .references("id")
             .inTable("users")
             .onDelete("CASCADE")
-            .onUpdate("CASCADE")
+            .onUpdate("CASCADE");
         table.timestamp("expires")
     })
 
@@ -42,14 +45,14 @@ exports.up = async function (knex) {
     });
 
     await knex.schema.createTable('reminders', tbl => {
-        tbl.increments()
+        tbl.increments();
 
         tbl.text('message')
-            .notNullable()
+            .notNullable();
         tbl.date('send_date')
-            .notNullable()
+            .notNullable();
         tbl.time('time')
-            .notNullable()
+            .notNullable();
         tbl.integer('user_id')
             .notNull()
             .unsigned()
@@ -57,7 +60,7 @@ exports.up = async function (knex) {
             // this table must exist already
             .inTable('users')
             .onUpdate('CASCADE')
-            .onDelete('CASCADE')
+            .onDelete('CASCADE');
 
     });
 
