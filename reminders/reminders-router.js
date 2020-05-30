@@ -17,7 +17,7 @@ const router = express.Router();
     res.status(500).json({ message: 'Failed to get reminders' });
   });
 });
- 
+
 // Returns reminders by user id
 // GET REMINDERS
 //GET /api/users/:id/reminders
@@ -41,9 +41,9 @@ router.get('/users/:id/reminders', (req, res) => {
 
 router.post('/reminders', async (req, res) => {
   console.log('here',req.body)
-  
-  
-  
+
+
+
   const reminderData  = {
     message:req.body.message,
     send_date:req.body.send_date,
@@ -51,7 +51,7 @@ router.post('/reminders', async (req, res) => {
     user_id: req.body.user_id
   }
   console.log(reminderData)
-  
+
   Users.findById(reminderData.user_id)
   .then(user => {
     if (user) {
@@ -71,7 +71,7 @@ router.post('/reminders', async (req, res) => {
 //UPDATE /api/users/:id/reminders
 
 router.put('/reminders/:id/', (req, res) => {
-  
+
   const changes= {
     message: req.body.message,
     send_date: req.body.send_date,
@@ -79,10 +79,10 @@ router.put('/reminders/:id/', (req, res) => {
     user_id:req.body.user_id
 
   }
- 
+
 
   const {id} = req.params
-  
+
     Reminders.findById(id)
     .then(reminder => {
       if (reminder) {
