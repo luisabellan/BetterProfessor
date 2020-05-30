@@ -14,7 +14,7 @@ const dotenv = require("dotenv");
 
 //const jokesRouter = require('../jokes/jokes-router.js');
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3300;
 const server = express();
 
 server.use(helmet());
@@ -38,7 +38,7 @@ server.use("/api/",restrict('mentor'), remindersRouter);
 server.get("/", (req, res, next) => {
 console.log(req.body)
 
-  res.json({
+  res.status(200).json({
     message: "Welcome to our API!",
   });
 });
