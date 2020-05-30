@@ -1,12 +1,12 @@
 exports.seed = function(knex, Promise) {
   // we want to remove all data before seeding
   // truncate will reset the primary key each time
-  return knex('users').truncate()
+  //return knex('users').truncate()
     .then(function () {
       // add data into insert
       return knex('users').insert([
-        
-        { 
+
+        {
           username: 'patrick',
           password:'abc123',
           name:"Patrick O'Connor",
@@ -14,7 +14,7 @@ exports.seed = function(knex, Promise) {
           email_address:'pat@gmail.com'
 
         },
-        { 
+        {
           username: 'rick',
           password:'abc123',
           name:'Richard Coleman',
@@ -22,7 +22,7 @@ exports.seed = function(knex, Promise) {
           email_address:'rick@gmail.com'
 
         },
-        { 
+        {
           username: 'mary',
           password:'abc123',
           name:'Mary Smith',
@@ -30,7 +30,7 @@ exports.seed = function(knex, Promise) {
           email_address:'mary@gmail.com'
 
         },
-        { 
+        {
           username: 'dan',
           password:'abc123',
           name:'Daniel Layman',
@@ -38,7 +38,7 @@ exports.seed = function(knex, Promise) {
           email_address:'dan@gmail.com'
 
         },
-        { 
+        {
           username: 'steph',
           password:'abc123',
           name:'Stephanie Crook',
@@ -46,11 +46,11 @@ exports.seed = function(knex, Promise) {
           email_address:'steph@gmail.com'
 
         },
-       
+
       ]);
     });
-  
-  
-  
-  
+
+
+
+
 };
