@@ -64,11 +64,6 @@ function updateReminder(data,id){
 }
 
 
- /*  const { id } = req.body
-  if (myReminder) {
-    myReminder.user_id = id
-
-  } */
 
 module.exports = {
   addReminder,
