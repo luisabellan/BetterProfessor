@@ -1,8 +1,8 @@
 exports.seed = function (knex, Promise) {
   // we want to remove all data before seeding
   // truncate will reset the primary key each time
-   return knex('projects').del()
-     .then(function () {
+  return knex('projects').truncate()
+    .then(function () {
       // add data into insert
       return knex('projects').insert([
         {
@@ -25,8 +25,18 @@ exports.seed = function (knex, Promise) {
           name: "Artificial Inteligence",
           due_date: "2020-05-03",
         }
-      ]
-      )
-      }
-    )
-  }
+
+
+
+
+
+
+
+
+      ]);
+    });
+
+
+
+
+};
