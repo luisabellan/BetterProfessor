@@ -21,7 +21,7 @@ module.exports = {
         conn.run('PRAGMA foreign_keys = ON', done); // turn on FK enforcement
       },
     },
-  }, 
+  },
   testing: {
     client: 'sqlite3',
     useNullAsDefault: true, // needed for sqlite
@@ -31,9 +31,9 @@ module.exports = {
     migrations: {
       directory: './data/migrations',
     },
-  /*   seeds: {
+     seeds: {
       directory: './data/seeds',
-    }, */
+    }, 
     // add the following
     pool: {
       afterCreate: (conn, done) => {
