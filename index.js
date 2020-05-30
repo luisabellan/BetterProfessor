@@ -10,6 +10,7 @@ const projectsUsersRouter = require("./projects-users/projects-users-router");
 const projectsRouter = require("./projects/projects-router");
 const remindersRouter = require("./reminders/reminders-router");
 const restrict = require("./auth/authenticate-middleware");
+const dotenv = require("dotenv");
 
 //const jokesRouter = require('../jokes/jokes-router.js');
 
