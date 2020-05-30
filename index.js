@@ -38,7 +38,7 @@ server.use("/api/",restrict('mentor'), remindersRouter);
 server.get("/", (req, res, next) => {
 console.log(req.body)
 
-  res.json({
+  res.status(200).json({
     message: "Welcome to our API!",
   });
 });
