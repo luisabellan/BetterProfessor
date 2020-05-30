@@ -12,7 +12,6 @@ const db = require("../data/dbConfig");
 
 beforeEach(async () => {
   await db("users").truncate();
-  //await db.seed.run();
 });
 
 afterAll(async () => {

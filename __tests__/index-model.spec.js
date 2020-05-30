@@ -1,7 +1,7 @@
 // no functions used here
 /*
-- when making a GET request to the `/` endpoint 
-  the API should respond with status code 200 
+- when making a GET request to the `/` endpoint
+  the API should respond with status code 200
   and the following JSON object: `{ message: "Welcome to our API" }`.
 */
 const request = require('supertest'); // calling it "request" is a common practice
@@ -9,9 +9,9 @@ const request = require('supertest'); // calling it "request" is a common practi
 const server = require('../index'); //
 const db = require("../data/dbConfig");
 
-beforeEach(async () => {
+beforeAll(async () => {
     await db('users').truncate();
-   // await db.seed.run();
+    //await db.seed.run();
 });
 
 afterAll(async () => {
@@ -19,7 +19,7 @@ afterAll(async () => {
 });
 describe('index.js', () => {
     // http calls made with supertest return promises, we can use async/await if desired
-   
+
 
         it('should return a JSON object from the index route', async () => {
             const expectedBody = { message: "Welcome to our API!" };
@@ -28,6 +28,5 @@ describe('index.js', () => {
 
             expect(response.body).toEqual(expectedBody);
         });
- 
+
 })
-        
