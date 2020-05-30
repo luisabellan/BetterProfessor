@@ -36,9 +36,9 @@ router.post("/register", async (req, res, next) => {
       });
     }
     if (!role) {
-  
+
       req.body.role = "student"
-  
+
     }
     res.status(201).json(await userModel.add(credentials));
   } catch (err) {
@@ -56,16 +56,16 @@ router.post("/login", async (req, res, next) => {
     const { username, password } = req.body;
 
     const user = await userModel.findByUsername(username);
-  
-  
+
+
 // find the user in the database by it's username then
 if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
   return res.status(401).json({ error: 'Incorrect credentials' });
 }
-    console.log('req.body.password', password)
-    console.log('user.password', user.password)
+    // console.log('req.body.password', password)
+    // console.log('user.password', user.password)
 
-   
+
 
     // create a new session in the database
     const session = await authModel.add({
