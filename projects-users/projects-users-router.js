@@ -8,7 +8,7 @@ const router = express.Router();
 // all users (without details about projects or reminders)
 router.get('/', restrict('mentor'), (req, res) => {
 console.log(req.body)
-  projectsUsers.getProjectsUsers()
+  projectsUsers.getProjectsUsers() 
     .then(users => {
       console.log("/users")
       res.status(200).json(users);
