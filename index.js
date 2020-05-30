@@ -14,7 +14,7 @@ const dotenv = require("dotenv");
 
 //const jokesRouter = require('../jokes/jokes-router.js');
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3300;
 const server = express();
 
 server.use(helmet());
