@@ -125,7 +125,7 @@ describe("reminders integration tests", () => {
       "user_id": 2
     };
 
-    await db("reminders").insert(data);
+    await db("reminders");
 
     const login = {
 

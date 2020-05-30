@@ -39,12 +39,21 @@ describe("reminders-model.js", () => {
       "message": "exam next monday",
       "send_date": "2016-03-07",
       "time": "08:00:00",
-      "user_id": 2"
+      "user_id": 2
     });
   });
 
   // Read function
   it("read function", async () => {
+    let data = {
+    "id": 1,
+    "message": "exam next monday",
+    "send_date": "2016-03-07",
+    "time": "08:00:00",
+    "user_id": 2
+    };
+
+    await db("reminders").insert(data);
 
         const login = {
 
@@ -91,9 +100,9 @@ describe("reminders-model.js", () => {
     let id = 1;
 
     await db("reminders").where({ id }).insert(data);
-    await db("reminders").where({ id }).update({ message: "Paco" });
-    let reminder = await db("reminders").where({ id }).first().select("name");
-    expect(reminder).toEqual({ message: "Bring your dictionary!" });
+    await db("reminders").where({ id }).update({ message: "Bring your dictionary!" });
+    let message = await db("reminders").where({ id }).first().select("message");
+    expect(message).toEqual({ message: "Bring your dictionary!" });
   });
   it("delete function", async () => {
     // status(204).del()
@@ -106,16 +115,15 @@ describe("reminders-model.js", () => {
     };
 
     await db("reminders").insert(data);
-    let id = "1";
+    let id = 1;
     let reminders;
     reminders = await db("reminders");
     expect(reminders).toHaveLength(1);
     await db("reminders").where({ id }).first().del();
     reminders = await db("reminders");
     expect(reminders).toHaveLength(0);
-    let reminders;
     reminders = await db("reminders").where({ id }).first();
 
-    expect(reminders).toEqual([]);
+    expect(reminders).toEqual(undefined);
   });
 });
