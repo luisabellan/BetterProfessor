@@ -1,4 +1,3 @@
-
 exports.up = async function (knex) {
     await knex.schema.createTable('users', tbl => {
         tbl.increments()
@@ -48,9 +47,9 @@ exports.up = async function (knex) {
         tbl.text('message')
             .notNullable()
         tbl.date('send_date')
-            .notNullable
+            .notNullable()
         tbl.time('time')
-            .notNullable
+            .notNullable()
         tbl.integer('user_id')
             .notNull()
             .unsigned()
