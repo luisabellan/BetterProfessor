@@ -3,9 +3,8 @@ exports.up = async function (knex) {
         tbl.increments();
         tbl.string('username', 128)
             .unique()
-            .notNullable()
-            .onDelete("CASCADE")
-            .onUpdate("CASCADE");
+            .notNullable();
+
         tbl.text('password')
             .notNullable();
         tbl.string('name', 128)
