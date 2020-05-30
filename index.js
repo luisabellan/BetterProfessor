@@ -31,7 +31,7 @@ server.use("/api/users",restrict('mentor'), usersRouter);
 server.use("/api/projects-users",restrict('mentor'), projectsUsersRouter);
 server.use("/api/auth", authRouter);
 server.use("/api/projects",restrict('mentor'), projectsRouter);
-server.use("/api/reminders",restrict('mentor'), remindersRouter);
+server.use("/api/",restrict('mentor'), remindersRouter);
 
 
 server.get("/", (req, res, next) => {
