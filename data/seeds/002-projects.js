@@ -25,12 +25,8 @@ exports.seed = function (knex, Promise) {
           name: "Artificial Inteligence",
           due_date: "2020-05-03",
         }
-
-
-
-
-
-
-
-
-      ])}}
+      ]
+      )
+      }
+    )
+  }
