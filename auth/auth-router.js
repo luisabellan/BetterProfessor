@@ -14,7 +14,7 @@ router.post("/register", async (req, res, next) => {
   try {
     const credentials = req.body;
 
-    const hash = bcrypt.hashSync(credentials.password, 14);
+    const hash = await bcrypt.hashSync(credentials.password, 14);
     credentials.password = hash;
 
     const { username, password, role } = req.body;
