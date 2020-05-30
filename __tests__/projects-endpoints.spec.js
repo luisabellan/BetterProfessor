@@ -53,7 +53,7 @@ describe("projects integration tests", () => {
   // });
   //
 
-  //LOGIN USER
+  // LOGIN USER
   it("POST /api/auth/login", async () => {
     const data = {
 
