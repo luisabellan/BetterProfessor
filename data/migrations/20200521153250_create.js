@@ -52,6 +52,7 @@ exports.up = async function (knex) {
         tbl.time('time')
             .notNullable
         tbl.integer('user_id')
+            .notNull()
             .unsigned()
             .references('id')
             // this table must exist already
