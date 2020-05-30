@@ -18,7 +18,7 @@ console.log(req.body)
     });
 });
 
-// /api/users/:id/
+
 // GET /api/users/:id/ users by id
 router.get('/:id', restrict(), (req, res) => {
   const { id } = req.params;
