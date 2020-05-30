@@ -5,11 +5,11 @@
 */
 const request = require('supertest'); // calling it "request" is a common practice
 
-const server = require('../api/server'); //
+const server = require('../index'); //
 const db = require("../data/dbConfig.js");
 beforeEach(async () => {
     await db('users').truncate();
-    await db.seed.run();
+   // await db.seed.run();
 });
 
 afterAll(async () => {

@@ -39,7 +39,7 @@ router.get("/", restrict(), async (req, res) => {
 // GET Projects and user information
 router.get("/users", async (req, res) => {
   try {
-    Projects.getProjectList()
+    await Projects.getProjectList()
       .then((users) => {
         if (users) {
           console.log("getProjectList - if");
@@ -111,7 +111,7 @@ router.post("/",  async (req, res, next) => {
         errorMessage: "Please provide due_date for the project.",
       });
     }
-  
+
     res.status(201).json(await Projects.create(req.body));
   } catch (err) {
     next(err);

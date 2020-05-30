@@ -62,7 +62,7 @@ exports.up = async function (knex) {
     });
 
 
-    await knex.schema.createTable('users_projects', tbl => {
+    await knex.schema.createTable('projects_users', tbl => {
 
 
         tbl.integer('project_id')
@@ -88,10 +88,10 @@ exports.up = async function (knex) {
 
         // the combination of the two keys becomes our primary key
         // will enforce unique combinations of ids
-        tbl.primary(['user_id', 'project_id']);
+        tbl.primary(['project_id','user_id']);
     });
 
-    
+
 
 
 
@@ -101,7 +101,7 @@ exports.up = async function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-    .dropTableIfExists('users_projects')
+    .dropTableIfExists('projects_users')
     .dropTableIfExists('reminders')
     .dropTableIfExists('projects')
     .dropTableIfExists('sessions')

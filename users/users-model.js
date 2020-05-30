@@ -1,7 +1,7 @@
 const db = require('../data/dbConfig.js');
 
 // retrives a user by their username
-function findByUsername(username) { 
+function findByUsername(username) {
   return db('users').where({ username }).first();
 }
 
@@ -9,13 +9,13 @@ function findByUsername(username) {
 //  return a list of all users in the database.
 
 function getUsers() {
-    return db('users')
+    return db('users').select('id','username','name','email_address', 'role')
 }
 
 // resolves to  Resolve to a single user object (or null)
 
 function findById(id) {
-    return db('users').where({ id }).first();
+    return  db('users').select('id','username','name','email_address', 'role').where({ id }).first();
 }
 
 
@@ -34,7 +34,7 @@ async function update(id, data) {
     await db("users").where({ id }).first().update(data);
     return findById(id);
   }
-  
+
 async function validateUser(id) {
     findById(id)
       .then((user) => {
@@ -56,7 +56,7 @@ async function validateUser(id) {
 
 module.exports = {
     getUsers,
-    findById, 
+    findById,
     add,
     remove,
     validateUser,
