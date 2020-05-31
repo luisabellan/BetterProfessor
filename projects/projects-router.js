@@ -1,5 +1,5 @@
 const express = require("express");
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
 const Projects = require("./projects-model");
 const restrict = require("../auth/authenticate-middleware");
 const db = require("../data/dbConfig");

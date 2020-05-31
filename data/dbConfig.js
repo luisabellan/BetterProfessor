@@ -1,6 +1,6 @@
 // ./data/dbConfig.js
 const knex = require('knex');
-const dotenv = require('dotenv')
+// const dotenv = require('dotenv')
 
 const config = require('../knexfile.js');
 

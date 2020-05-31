@@ -5,7 +5,7 @@ const authModel = require("./auth-model");
 const userModel = require("../users/users-model");
 const restrict = require("./authenticate-middleware");
 const db = require("../data/dbConfig");
-const dotenv = require('dotenv')
+// const dotenv = require('dotenv')
 
 
 const router = express.Router();

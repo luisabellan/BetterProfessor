@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 const authModel = require("../auth/auth-model")
-const dotenv = require('dotenv')
+// const dotenv = require('dotenv')
 
 const roles = ["student", "mentor"]
 
