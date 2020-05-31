@@ -1,9 +1,9 @@
 const request = require("supertest"); // calling it "request" is a common practice
 const supertest = require("supertest");
 const bcrypt = require("bcryptjs");
-const server = require("../index");
-
+const server = require("../server");
 const projectsModel = require("../projects/projects-model");
+const usersModel = require("../users/users-model");
 const db = require("../data/dbConfig");
 
 beforeEach(async () => {
@@ -68,17 +68,26 @@ describe("projects-model.js", () => {
     await supertest(server).post("/api/auth/login").send(login);
 
     // find the user in the database by its username then
-    //let user = db("users").where({ username: login.username }).first();
-    projectsModel.getProjects();
+    let user = db("users").where({ username: login.username }).first();
     if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
       return console.log("Incorrect credentials");
     }
-
-    const res = await supertest(server).get("/api/projects");
+    let data = {
+      id: 1,
+      message: "exam next monday",
+      send_date: "2016-03-07",
+      time: "08:00:00",
+      user_id: 2,
+    };
+    //const res = await supertest(server).get("/api/reminders");
+    const res = projectsModel.getProjects();
+    console.log(res);
     expect(res.statusCode).toBe(200);
     expect(res.type).toBe("application/json");
-    expect(res.body[0].name).toBe("Apples and Pears");
-    expect(res.body[0].due_date).toBe("2020-07-17");
+    expect(res.body[0].message).toBe("exam next monday");
+    expect(res.body[0].send_date).toBe("2016-03-07");
+    expect(res.body[0].time).toBe("08:00:00");
+    expect(res.body[0].user_id).toBe(2);
     expect(res.body).toHaveLength(1);
   });
 
