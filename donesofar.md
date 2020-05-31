@@ -27,7 +27,7 @@
 [x] GET /api/projects/users (Get projects and user information)
 
 ### Reminders ###
-[] POST /api/reminders
+[x] POST /api/reminders
 [x] GET /api/reminders/ (Get reminders)
 [x] GET /api/users/:id/reminders/ (Get reminders by user id)
 [x] DELETE /api/reminders/:id (Delete reminder by user id)
