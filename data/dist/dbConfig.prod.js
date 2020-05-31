@@ -1,0 +1,1 @@
+"use strict";var knex=require("knex"),dotenv=require("dotenv"),config=require("../knexfile.js"),dbEnv=process.env.DB_ENV||"development";module.exports=knex(config[dbEnv]);
