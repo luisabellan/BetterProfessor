@@ -48,13 +48,7 @@ describe("reminders-model.js", () => {
     if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
       return console.log("Incorrect credentials");
     }
-    let data = {
-      id: 1,
-      message: "exam next monday",
-      send_date: "2016-03-07",
-      time: "08:00:00",
-      user_id: 2,
-    };
+
     //const res = await supertest(server).get("/api/reminders");
     const res = remindersModel.getReminders();
     console.log(res);
