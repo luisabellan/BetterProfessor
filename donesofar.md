@@ -14,20 +14,20 @@
 ### Auth ###
 
 [x] POST /api/auth/register (Register)
-[] POST /api/auth/register (Login )
-[] POST /api/auth/login (Login - invalid credentials)
-[] POST /api/auth/login (Login - valid credentials)
+[x] POST /api/auth/register (Login )
+[x] POST /api/auth/login (Login - invalid credentials)
+[x] POST /api/auth/login (Login - valid credentials)
 
 
 ### Projects ###
 
-[] POST /api/projects
+[x] POST /api/projects
 [x] GET /api/projects/ (Get projects)
 [x] GET /api/projects/:id (Get projects by id)
 [x] GET /api/projects/users (Get projects and user information)
 
 ### Reminders ###
-[] POST /api/reminders
+[x] POST /api/reminders
 [x] GET /api/reminders/ (Get reminders)
 [x] GET /api/users/:id/reminders/ (Get reminders by user id)
 [x] DELETE /api/reminders/:id (Delete reminder by user id)
