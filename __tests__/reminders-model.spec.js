@@ -1,8 +1,4 @@
-/*
-- when making a GET request to the `/` endpoint
-  the API should respond with status code 200
-  and the following JSON object: `{ message: "Welcome to our API" }`.
-*/
+
 
 const request = require("supertest"); // calling it "request" is a common practice
 const supertest = require("supertest");
