@@ -1,7 +1,7 @@
 // Update with your config settings.
 
 module.exports = {
-  development: {
+  production: {
     client: "sqlite3",
     useNullAsDefault: true, // needed for sqlite
     connection: {
