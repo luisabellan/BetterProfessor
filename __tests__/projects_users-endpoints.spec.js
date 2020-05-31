@@ -1,5 +1,5 @@
 const supertest = require("supertest");
-const server = require("../index");
+const server = require("../server");
 const db = require("../data/dbConfig");
 const bcrypt = require("bcryptjs");
 
@@ -11,27 +11,21 @@ afterAll(async () => {
   await db.destroy();
 });
 
-
-
 describe("projects_users integration tests", () => {
   //CREATE PROJECTS_USERS
   it("POST /api/projects-users", async () => {
     const data = {
-    "project_id": 1,
-    "user_id": 2,
+      project_id: 1,
+      user_id: 2,
     };
     const login = {
-
       username: "Jake",
       password: "abc123",
-
     };
     const credentials = login;
     const hash = bcrypt.hashSync(credentials.password, 14);
 
     credentials.password = hash;
-
-
 
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();
@@ -44,11 +38,10 @@ describe("projects_users integration tests", () => {
     expect(res.statusCode).toBe(201);
     expect(res.type).toBe("application/json");
     expect(res.body).toEqual({
-      "project_id": 1,
-    "user_id": 2
+      project_id: 1,
+      user_id: 2,
     });
   });
-
 
   // // LOGIN USER
   // it("POST /api/auth/login", async () => {
@@ -78,20 +71,15 @@ describe("projects_users integration tests", () => {
   //
   // });
 
-
-
   // UPDATE PROJECTS_USERS
   it("UPDATE /api/projects_users/:id", async () => {
-
     const data = {
-      "user_id": 2
+      user_id: 2,
     };
     let id = 1;
     const login = {
-
       username: "Jake",
       password: "abc123",
-
     };
 
     const credentials = login;
@@ -101,31 +89,30 @@ describe("projects_users integration tests", () => {
 
     const res = await supertest(server).post("/api/auth/login").send(login);
 
-
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();
     if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
       return console.log("Incorrect credentials");
     }
 
-    const result = await supertest(server).put(`/api/projects_users/${id}`).send(data);
+    const result = await supertest(server)
+      .put(`/api/projects_users/${id}`)
+      .send(data);
     expect(result.type).toBe("application/json");
     expect(status).toBe(201);
   });
 
   it("GET /api/projects_users", async () => {
-     let data = {
-       "project_id": 1,
-    "user_id": 2
+    let data = {
+      project_id: 1,
+      user_id: 2,
     };
 
     await db("projects_users");
 
     const login = {
-
       username: "Jake",
       password: "abc123",
-
     };
 
     const credentials = login;
@@ -133,8 +120,7 @@ describe("projects_users integration tests", () => {
 
     credentials.password = hash;
 
-     await supertest(server).post("/api/auth/login").send(login);
-
+    await supertest(server).post("/api/auth/login").send(login);
 
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();
@@ -152,20 +138,18 @@ describe("projects_users integration tests", () => {
 
   it("GET /api/projects_users/:project_id", async () => {
     let data = {
-      "project_id": 1,
-   "user_id": 2
+      project_id: 1,
+      user_id: 2,
     };
 
-    await db("projects_users").where({project_id:2}).first();
+    await db("projects_users").where({ project_id: 2 }).first();
 
     let project_id = 2;
     let result;
 
     const login = {
-
       username: "Jake",
       password: "abc123",
-
     };
 
     const credentials = login;
@@ -174,7 +158,6 @@ describe("projects_users integration tests", () => {
     credentials.password = hash;
 
     await supertest(server).post("/api/auth/login").send(login);
-
 
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();
@@ -185,8 +168,8 @@ describe("projects_users integration tests", () => {
     result = await supertest(server).get(`/api/projects_users/${id}`);
 
     expect(result.body).toEqual({
-      "project_id": 1,
-   "user_id": 2
+      project_id: 1,
+      user_id: 2,
     });
   });
 
@@ -195,10 +178,8 @@ describe("projects_users integration tests", () => {
     const expectedStatusCode = 404;
     let res;
     const login = {
-
       username: "Jake",
       password: "abc123",
-
     };
 
     const credentials = login;
@@ -207,7 +188,6 @@ describe("projects_users integration tests", () => {
     credentials.password = hash;
 
     await supertest(server).post("/api/auth/login").send(login);
-
 
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();

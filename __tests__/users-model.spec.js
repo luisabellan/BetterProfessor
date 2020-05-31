@@ -7,7 +7,7 @@
 const request = require("supertest"); // calling it "request" is a common practice
 const supertest = require("supertest");
 const bcrypt = require("bcryptjs");
-const server = require("../index");
+const server = require("../server");
 const db = require("../data/dbConfig");
 
 beforeEach(async () => {
@@ -45,36 +45,32 @@ describe("user-model.js", () => {
 
   // Read function
   it("read function", async () => {
+    const login = {
+      username: "Jake",
+      password: "abc123",
+    };
 
-        const login = {
+    const credentials = login;
+    const hash = bcrypt.hashSync(credentials.password, 14);
 
-          username: "Jake",
-          password: "abc123",
+    credentials.password = hash;
 
-        };
+    await supertest(server).post("/api/auth/login").send(login);
 
-        const credentials = login;
-        const hash = bcrypt.hashSync(credentials.password, 14);
+    // find the user in the database by its username then
+    let user = db("users").where({ username: login.username }).first();
+    if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
+      // console.log("Incorrect credentials");
+      return;
+    }
 
-        credentials.password = hash;
-
-         await supertest(server).post("/api/auth/login").send(login);
-
-
-        // find the user in the database by its username then
-        let user = db("users").where({ username: login.username }).first();
-        if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
-          return console.log("Incorrect credentials");
-        }
-
-        const res = await supertest(server).get("/api/users");
-        expect(res.statusCode).toBe(200);
-        expect(res.type).toBe("application/json");
-        expect(res.body[0].username).toBe("Jake");
-        expect(res.body[0].role).toBe("student");
-        expect(res.body).toHaveLength(1);
-      });
-
+    const res = await supertest(server).get("/api/users");
+    expect(res.statusCode).toBe(200);
+    expect(res.type).toBe("application/json");
+    expect(res.body[0].username).toBe("Jake");
+    expect(res.body[0].role).toBe("student");
+    expect(res.body).toHaveLength(1);
+  });
 
   it("update function", async () => {
     let data = {
@@ -84,8 +80,6 @@ describe("user-model.js", () => {
       name: "Paul Smith",
       email_address: "paul@gmail.com",
       role: "mentor",
-
-
     };
     let id = 1;
 

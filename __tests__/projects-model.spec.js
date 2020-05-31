@@ -32,7 +32,8 @@ describe("projects-model.js", () => {
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();
     if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
-      return console.log("Incorrect credentials");
+      // console.log("Incorrect credentials");
+      return;
     }
 
     let projectData = {
@@ -70,7 +71,8 @@ describe("projects-model.js", () => {
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();
     if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
-      return console.log("Incorrect credentials");
+      // console.log("Incorrect credentials");
+      return;
     }
 
     //const res = await supertest(server).get("/api/reminders");
@@ -101,7 +103,8 @@ describe("projects-model.js", () => {
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();
     if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
-      return console.log("Incorrect credentials");
+      // console.log("Incorrect credentials");
+      return;
     }
     let data = {
       id: 1,
@@ -132,7 +135,8 @@ describe("projects-model.js", () => {
     // find the user in the database by its username then
     let user = db("users").where({ username: login.username }).first();
     if (!user || !bcrypt.compareSync(credentials.password, login.password)) {
-      return console.log("Incorrect credentials");
+      // console.log("Incorrect credentials");
+      return;
     }
 
     let projectData = {
