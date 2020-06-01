@@ -23,7 +23,13 @@ function findById(id) {
 // CREATE USER
 async function add(user) {
   await db("users")
-    //.returning({})
+    .returning({
+      id: user.id,
+      username:user.username,
+      password: user.password,
+      name: user.name,
+      email_address=user.email_address_
+    })
     .insert(user)
     .then((ids) => {
       return findById(ids[0]);
