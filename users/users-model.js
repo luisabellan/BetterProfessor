@@ -1,7 +1,7 @@
 const db = require("../data/dbConfig.js");
 
 // retrives a user by their username
-function findByUsername(username) {
+async function findByUsername(username) {
   return db("users").where({ username }).first();
 }
 
