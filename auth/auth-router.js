@@ -20,7 +20,6 @@ router.post("/register", async (req, res, next) => {
         message: "Username is already taken",
       });
     }
-    let credentials = req.body;
 
     if (!credentials.username) {
       return res.status(400).json({
