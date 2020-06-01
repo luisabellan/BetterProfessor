@@ -11,11 +11,6 @@ const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
   try {
-    let credentials = req.body;
-
-    let hash = await bcrypt.hashSync(credentials.password, 14);
-    credentials.password = hash;
-
     // const { username, password, role } = req.body;
     let user = await userModel.findByUsername(username);
 
@@ -37,6 +32,11 @@ router.post("/register", async (req, res, next) => {
     if (!credentials.role) {
       req.body.role = "student";
     }
+    let credentials = req.body;
+
+    let hash = await bcrypt.hashSync(credentials.password, 14);
+    credentials.password = hash;
+
     res.status(201).json(await userModel.add(credentials));
   } catch (err) {
     next(err);
