@@ -24,11 +24,10 @@ function findById(id) {
 async function add(user) {
   await db("users")
     .returning({
-      'id' : user.id,
-      'username' :user.username,
-      'name': user.name,
-      'email_address': user.email_address,
-      'role': user.role,
+      username: user.username,
+      name: user.name,
+      email_address: user.email_address,
+      role: user.role,
     })
     .insert(user)
     .then((ids) => {
