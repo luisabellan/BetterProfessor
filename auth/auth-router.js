@@ -36,6 +36,12 @@ router.post("/register", async (req, res, next) => {
     const hash = await bcrypt.hashSync(password, 14);
     password = hash;
 
+    let credentials = { 
+      username = username,
+      password = password
+
+    }
+
     res.status(201).json(await userModel.add(credentials));
   } catch (err) {
     next(err);
