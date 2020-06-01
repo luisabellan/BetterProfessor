@@ -13,7 +13,7 @@ router.post("/register", async (req, res, next) => {
   try {
     // const { username, password, role } = req.body;
     let credentials = req.body;
-    let user = await userModel.findByUsername(credentials.username);
+    let user = userModel.findByUsername(credentials.username);
 
     if (user) {
       return res.status(409).json({
@@ -45,14 +45,16 @@ router.post("/register", async (req, res, next) => {
 });
 
 router.post("/login", async (req, res, next) => {
-  /*   const authError = {
+  const authError = {
     message: "Invalid Credentials",
-  }; */
+  };
 
   try {
-    let credentials = req.body;
-    let user = await userModel.findByUsername(req.body.username);
-    //console.log(await userModel.findByUsername(credentials.username));
+    const { username, password } = req.body;
+
+    const user = await userModel.findByUsername(username);
+
+    const credentials = req.body;
 
     // find the user in the database by it's username then
     if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
