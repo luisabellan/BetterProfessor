@@ -19,17 +19,17 @@ router.post("/register", async (req, res, next) => {
         message: "Username is already taken",
       });
     }
-    if (!req.body.username) {
+    if (!user.username) {
       return res.status(400).json({
         errorMessage: "Please provide username for the user.",
       });
     }
-    if (!req.body.password) {
+    if (!user.password) {
       return res.status(400).json({
         errorMessage: "Please provide password for the user.",
       });
     }
-    if (!req.body.role) {
+    if (!user.role) {
       req.body.role = "student";
     }
     let credentials = req.body;
