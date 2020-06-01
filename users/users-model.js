@@ -39,7 +39,7 @@ async function add(user) {
 //UPDATE USER
 async function update(id, data) {
   //validateUser(id)
-  await db("users").where({ id }).first().returning("id").update(data);
+  await db("users").where({ id }).first().update(data);
   return findById(id);
 }
 
