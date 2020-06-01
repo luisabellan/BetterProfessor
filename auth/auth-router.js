@@ -19,20 +19,21 @@ router.post("/register", async (req, res, next) => {
         message: "Username is already taken",
       });
     }
-    if (!user.username) {
+    let credentials = req.body;
+
+    if (!credentials.username) {
       return res.status(400).json({
         errorMessage: "Please provide username for the user.",
       });
     }
-    if (!user.password) {
+    if (!credentials.password) {
       return res.status(400).json({
         errorMessage: "Please provide password for the user.",
       });
     }
-    if (!user.role) {
-      req.body.role = "student";
+    if (!credentials.role) {
+      credentials.role = "student";
     }
-    let credentials = req.body;
 
     let hash = await bcrypt.hashSync(credentials.password, 14);
     credentials.password = hash;
