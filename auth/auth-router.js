@@ -12,8 +12,8 @@ const router = express.Router();
 router.post("/register", async (req, res, next) => {
   try {
     // const { username, password, role } = req.body;
-    let credentials = req.body;
-    let user = userModel.findByUsername(credentials.username);
+
+    let user = await userModel.findByUsername(req.body.username);
 
     /*    if (user) {
       return res.status(409).json({
@@ -21,7 +21,7 @@ router.post("/register", async (req, res, next) => {
       });
     } */
 
-    console.log("username", credentials.username);
+    console.log("username", req.body.username);
     if (!user.username) {
       return res.status(400).json({
         errorMessage: "Please provide username for the user.",
@@ -35,7 +35,7 @@ router.post("/register", async (req, res, next) => {
     if (!user.role) {
       user.role = "student";
     }
-
+    let credentials = req.body;
     let hash = await bcrypt.hashSync(credentials.password, 14);
     credentials.password = hash;
 
