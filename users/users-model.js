@@ -28,7 +28,7 @@ async function add(user) {
       username:user.username,
       password: user.password,
       name: user.name,
-      email_address=user.email_address_
+      email_address=user.email_address
     })
     .insert(user)
     .then((ids) => {
