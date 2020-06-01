@@ -7,14 +7,13 @@ const restrict = require("./authenticate-middleware");
 const db = require("../data/dbConfig");
 // const dotenv = require('dotenv')
 
-
 const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
   try {
-    const credentials = req.body;
+    // const credentials = req.body;
 
-    const hash = await bcrypt.hashSync(credentials.password, 14);
+    const hash = await bcrypt.hashSync(req.body.password, 14);
     credentials.password = hash;
 
     const { username, password, role } = req.body;
@@ -36,9 +35,7 @@ router.post("/register", async (req, res, next) => {
       });
     }
     if (!role) {
-
-      req.body.role = "student"
-
+      req.body.role = "student";
     }
     res.status(201).json(await userModel.add(credentials));
   } catch (err) {
@@ -56,16 +53,14 @@ router.post("/login", async (req, res, next) => {
 
     const user = await userModel.findByUsername(username);
 
-    const credentials = req.body
+    const credentials = req.body;
 
-// find the user in the database by it's username then
-if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
-  return res.status(401).json({ error: 'Incorrect credentials' });
-}
+    // find the user in the database by it's username then
+    if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
+      return res.status(401).json({ error: "Incorrect credentials" });
+    }
     // console.log('req.body.password', password)
     // console.log('user.password', user.password)
-
-
 
     // create a new session in the database
     const session = await authModel.add({
