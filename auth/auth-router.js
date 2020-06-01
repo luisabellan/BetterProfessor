@@ -11,7 +11,9 @@ const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
   try {
-    const credentials = req.body;
+    let { username, password, role } = req.body;
+
+    let user = await userModel.findByUsername(username);
 
     if (user) {
       return res.status(409).json({
@@ -31,11 +33,9 @@ router.post("/register", async (req, res, next) => {
     if (!role) {
       req.body.role = "student";
     }
-    const hash = await bcrypt.hashSync(credentials.password, 14);
-    credentials.password = hash;
+    const hash = await bcrypt.hashSync(password, 14);
+    password = hash;
 
-    const { username, password, role } = req.body;
-    const user = await userModel.findByUsername(username);
     res.status(201).json(await userModel.add(credentials));
   } catch (err) {
     next(err);
