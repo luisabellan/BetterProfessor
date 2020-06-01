@@ -2,10 +2,7 @@ const db = require("../data/dbConfig.js");
 
 // retrives a user by their username
 function findByUsername(username) {
-  return db("users")
-    .select("id", "username", "name", "email_address", "role")
-    .where({ username })
-    .first();
+  return db("users").where({ username }).first();
 }
 
 //  return a list of all users in the database.
@@ -42,7 +39,7 @@ async function add(user) {
 //UPDATE USER
 async function update(id, data) {
   //validateUser(id)
-  await db("users").where({ id }).first().update(data);
+  await db("users").where({ id }).first().returning("id").update(data);
   return findById(id);
 }
 
