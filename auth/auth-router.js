@@ -12,7 +12,7 @@ const router = express.Router();
 router.post("/register", async (req, res, next) => {
   try {
     // const { username, password, role } = req.body;
-    let user = await userModel.findByUsername(username);
+    let user = await userModel.findByUsername(req.body.username);
 
     if (user) {
       return res.status(409).json({
