@@ -52,6 +52,7 @@ router.post("/login", async (req, res, next) => {
   try {
     let credentials = req.body;
     let user = await userModel.findByUsername(credentials.username);
+    //console.log(await userModel.findByUsername(credentials.username));
 
     // find the user in the database by it's username then
     if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
@@ -61,6 +62,7 @@ router.post("/login", async (req, res, next) => {
     // console.log('user.password', user.password)
 
     // create a new session in the database
+    //returning({user_id:user.id})
     const session = await authModel.add({
       user_id: user.id,
       // a SQLite trick to set a date in the future
