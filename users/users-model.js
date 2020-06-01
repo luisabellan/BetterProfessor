@@ -2,10 +2,7 @@ const db = require("../data/dbConfig.js");
 
 // retrives a user by their username
 function findByUsername(username) {
-  return db("users")
-    .select("id", "username", "name", "email_address", "role")
-    .where({ username })
-    .first();
+  return db("users").where({ username }).first();
 }
 
 //  return a list of all users in the database.
