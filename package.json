@@ -8,7 +8,7 @@
   "description": "Students and projects managament for mentors",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env DB_ENV=production  node  index.js",
+    "start": "node  index.js",
     "server": "cross-env DB_ENV=development  nodemon -r dotenv/config index.js",
     "test": "cross-env DB_ENV=testing jest --watchAll"
   },
