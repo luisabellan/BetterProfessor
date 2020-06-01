@@ -50,11 +50,8 @@ router.post("/login", async (req, res, next) => {
   };
 
   try {
-    const { username, password } = req.body;
-
-    const user = await userModel.findByUsername(username);
-
-    const credentials = req.body;
+    let credentials = req.body;
+    let user = await userModel.findByUsername(credentials.username);
 
     // find the user in the database by it's username then
     if (!user || !bcrypt.compareSync(credentials.password, user.password)) {
