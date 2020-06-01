@@ -11,37 +11,32 @@ const router = express.Router();
 
 router.post("/register", async (req, res, next) => {
   try {
-    let { username, password, role } = req.body;
+    const credentials = req.body;
 
-    let user = await userModel.findByUsername(username);
+    const hash = await bcrypt.hashSync(credentials.password, 14);
+    credentials.password = hash;
+
+    // const { username, password, role } = req.body;
+    const user = await userModel.findByUsername(username);
 
     if (user) {
       return res.status(409).json({
         message: "Username is already taken",
       });
     }
-    if (!username) {
+    if (!credentials.username) {
       return res.status(400).json({
         errorMessage: "Please provide username for the user.",
       });
     }
-    if (!password) {
+    if (!credentials.password) {
       return res.status(400).json({
         errorMessage: "Please provide password for the user.",
       });
     }
-    if (!role) {
+    if (!credentials.role) {
       req.body.role = "student";
     }
-    const hash = await bcrypt.hashSync(password, 14);
-    password = hash;
-
-    let credentials = { 
-      username = username,
-      password = password
-
-    }
-
     res.status(201).json(await userModel.add(credentials));
   } catch (err) {
     next(err);
