@@ -26,7 +26,6 @@ async function add(user) {
     .returning({
       id: user.id,
       username:user.username,
-      password: user.password,
       name: user.name,
       email_address=user.email_address
     })
