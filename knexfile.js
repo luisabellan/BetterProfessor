@@ -21,7 +21,40 @@ module.exports = {
         conn.run('PRAGMA foreign_keys = ON', done); // turn on FK enforcement
       },
     },
-  }, 
+  },
+
+  staging: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
+    }
+  },
+
+  production: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
+    }
+  },
+
   testing: {
     client: 'sqlite3',
     useNullAsDefault: true, // needed for sqlite
@@ -31,9 +64,9 @@ module.exports = {
     migrations: {
       directory: './data/migrations',
     },
-  /*   seeds: {
+     seeds: {
       directory: './data/seeds',
-    }, */
+    },
     // add the following
     pool: {
       afterCreate: (conn, done) => {
@@ -41,12 +74,6 @@ module.exports = {
         conn.run('PRAGMA foreign_keys = ON', done); // turn on FK enforcement
       },
     },
-  },
 
-
-
-
-
-
-
-};
+   }
+}

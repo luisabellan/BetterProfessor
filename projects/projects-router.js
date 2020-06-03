@@ -4,12 +4,11 @@ const Projects = require("./projects-model");
 const restrict = require("../auth/authenticate-middleware");
 const db = require("../data/dbConfig");
 
-
 const router = express.Router();
 
 // GET /api/projects
 router.get("/", restrict(), async (req, res) => {
-  console.log("/api/projects/")
+  console.log("/api/projects/");
   await Projects.getProjects()
     .then((projects) => {
       if (projects) {
@@ -22,28 +21,45 @@ router.get("/", restrict(), async (req, res) => {
         res
           .status(404)
           .json({ message: "Could not find project for given project" });
-
       }
-
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json({ message: "Failed to get users's projects" });
     });
+});
 
+//  GET projects by id
 
+router.get("/:id", restrict(), (req, res) => {
+  console.log("/api/projects/1");
+  Projects.findById(req.params.id)
+    .then((project) => {
+      if (project) {
+        console.log("getProjects - if");
 
-})
+        res.status(200).json(project);
+      } else {
+        console.log("getProjects - else");
 
+        res
+          .status(404)
+          .json({ message: "Could not find project for given project" });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Failed to get users's projects" });
+    });
+});
 
 // GET Projects and user information
 router.get("/users", async (req, res) => {
   try {
-    Projects.getProjectList()
+    await Projects.getProjectList()
       .then((users) => {
         if (users) {
           console.log("getProjectList - if");
-
 
           return res.status(200).json(users);
         } else {
@@ -58,41 +74,38 @@ router.get("/users", async (req, res) => {
         console.log(err);
         res.status(500).json({ message: "Failed to get users's projects" });
       });
-
   } catch (error) {
-    console.log(error)
+    console.log(error);
 
     return res.status(500).json({
       error: "There was an error while saving the comment to the database",
-    })
-
+    });
   }
-
-
-})
-
+});
 
 // DELETE PROJECT
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
   Projects.remove(id)
-  .then(deleted => {
-    if (deleted) {
-      res.json({ removed: deleted });
-    } else {
-      res.status(404).json({ message: 'Could not find reminder with given id' });
-    }
-  })
-  .catch(err => {
-    res.status(500).json({ message: 'Failed to delete reminder' });
-  });
+    .then((deleted) => {
+      if (deleted) {
+        res.json({ removed: deleted });
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find reminder with given id" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to delete reminder" });
+    });
 });
 
 // CREATE PROJECT
-router.post("/",  async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const { name } = req.body;
     const project = await Projects.findByProjectName(name);
 
@@ -111,13 +124,11 @@ router.post("/",  async (req, res, next) => {
         errorMessage: "Please provide due_date for the project.",
       });
     }
-  
+
     res.status(201).json(await Projects.create(req.body));
   } catch (err) {
     next(err);
   }
 });
-
-
 
 module.exports = router;

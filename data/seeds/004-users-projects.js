@@ -1,16 +1,16 @@
 exports.seed = function (knex, Promise) {
   // we want to remove all data before seeding
   // truncate will reset the primary key each time
-  return knex('users_projects').truncate()
-    .then(function () {
-      // add data into insert
-      return knex('users_projects').insert([
+   return knex('projects_users').truncate()
+     .then(function () {
+       // add data into insert
+      return knex('projects_users').insert([
         {
           project_id: 1,
           user_id: 2,
         },
         {
-          project_id: 1,
+          project_id: 1,z
           user_id: 3,
         },
         {
@@ -28,7 +28,6 @@ exports.seed = function (knex, Promise) {
 
 
       ]);
-    });
 
 
 

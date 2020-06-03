@@ -1,9 +1,9 @@
 exports.seed = function (knex, Promise) {
   // we want to remove all data before seeding
   // truncate will reset the primary key each time
-  return knex("reminders")
-    .truncate()
-    .then(function () {
+   return knex("reminders")
+     .truncate()
+     .then(function () {
       // add data into insert
       return knex("reminders").insert([
         {
@@ -18,7 +18,7 @@ exports.seed = function (knex, Promise) {
           time:"08:00:00",
           user_id: 1
 
-          
+
         },
         {
           message: "did you copy the text?",
@@ -41,9 +41,8 @@ exports.seed = function (knex, Promise) {
           user_id: 3
 
         },
-        
+
 
 
       ]);
-    });
 };
