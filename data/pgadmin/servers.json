@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "API-dev-better-professor",
+      "Group": "Dev",
+      "Port": 5432,
+      "Username": "docker",
+      "Host": "better-professor",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    }
+  }
+}

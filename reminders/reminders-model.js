@@ -1,4 +1,4 @@
-const db = require("../data/dbConfig.js");
+const db = require("../data/db-config");
 const Users = require("../users/users-model");
 
 /* // returns  all recipes in the system that utilize a single ingredient

@@ -1,4 +1,4 @@
-const db = require("../data/dbConfig.js");
+const db = require("../data/db-config");
 
 //  return a list of all projects in the database.
 
@@ -35,7 +35,7 @@ function getProjectList() {
 
 // retrives a project by their id
 function findById(id) {
-  return db("projects").where({id}).first();
+  return db("projects").where({ id }).first();
 }
 
 // retrives a project by their name

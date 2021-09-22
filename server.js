@@ -10,9 +10,6 @@ const projectsUsersRouter = require("./projects-users/projects-users-router");
 const projectsRouter = require("./projects/projects-router");
 const remindersRouter = require("./reminders/reminders-router");
 const restrict = require("./auth/authenticate-middleware");
-//const dotenv = require("dotenv");
-
-//const jokesRouter = require('../jokes/jokes-router.js');
 
 const port = process.env.PORT;
 const server = express();
@@ -48,9 +45,5 @@ server.use((err, req, res, next) => {
     message: "Something went wrong",
   });
 });
-
-/* server.listen(port, () => {
-  console.log(`Running at http://localhost:${port}`);
-}); */
 
 module.exports = server;

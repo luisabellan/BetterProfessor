@@ -1,8 +1,7 @@
 const express = require("express");
-// const dotenv = require("dotenv");
 const Projects = require("./projects-model");
 const restrict = require("../auth/authenticate-middleware");
-const db = require("../data/dbConfig");
+const db = require("../data/db-config");
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-const db = require("../data/dbConfig.js");
+const db = require("../data/db-config");
 
 // retrives a user by their username
 async function findByUsername(username) {

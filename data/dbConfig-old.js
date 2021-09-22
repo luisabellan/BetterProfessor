@@ -1,8 +1,7 @@
 // ./data/dbConfig.js
 const knex = require("knex");
-// const dotenv = require('dotenv')
 
-const config = require("../knexfile.js");
+const config = require("../config/knexfile");
 
 // if the environment variable is not set, default to 'development'
 // this variable is only set when running the "test" npm script using npm run test

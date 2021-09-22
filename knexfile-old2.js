@@ -22,37 +22,37 @@ module.exports = {
     },
   },
 
-   staging: {
-    client: 'pg',
+  staging: {
+    client: "pg",
     connection: process.env.DATABASE_URL,
 
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
-      directory: './data/migrations'
+      directory: "./data/migrations",
     },
     seeds: {
-      directory: './data/seeds'
-    }
+      directory: "./data/seeds",
+    },
   },
 
   production: {
-    client: 'pg',
+    client: "pg",
     connection: process.env.DATABASE_URL,
 
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
-      directory: './data/migrations'
+      directory: "./data/migrations",
     },
     seeds: {
-      directory: './data/seeds'
-    }
-  }, 
+      directory: "./data/seeds",
+    },
+  },
 
   testing: {
     client: "sqlite3",
