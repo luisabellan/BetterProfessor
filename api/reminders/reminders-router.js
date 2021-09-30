@@ -1,6 +1,6 @@
 const express = require("express");
 
-const Reminders = require("../reminders/reminders-model");
+const Reminders = require("./reminders-model");
 const Users = require("../users/users-model");
 
 const router = express.Router();

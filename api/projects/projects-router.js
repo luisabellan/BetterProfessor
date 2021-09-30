@@ -1,7 +1,7 @@
 const express = require("express");
 const Projects = require("./projects-model");
 const restrict = require("../auth/authenticate-middleware");
-const db = require("../data/db-config");
+const db = require("../../data/db-config");
 
 const router = express.Router();
 

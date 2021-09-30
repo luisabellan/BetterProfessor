@@ -1,4 +1,4 @@
-var dotenv = require("dotenv");
+const dotenv = require("dotenv");
 dotenv.config({ path: "../.env" });
 
 module.exports = {

@@ -1,4 +1,4 @@
-const db = require("../data/db-config");
+const db = require("../../data/db-config");
 
 async function add(data) {
   const [id] = await db("sessions").insert(data);

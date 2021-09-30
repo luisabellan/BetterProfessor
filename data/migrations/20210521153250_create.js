@@ -1,15 +1,20 @@
-exports.up = async function (knex) {
-  await knex.schema.createTable("users", (tbl) => {
-    tbl.increments();
-    tbl.string("username", 128).unique().notNullable();
-    tbl.text("password").notNullable();
-    tbl.string("name", 128).notNullable();
-    tbl.string("email_address", 128).unique().notNullable();
+const { onUpdateTrigger } = require("../../config/knexfile");
 
-    tbl.enum("role", ["student", "mentor"]).notNull().defaultTo("student");
-  });
+exports.up =  (knex) {
+  return knex.schema
+    .raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
 
-  await knex.schema.createTable("sessions", (table) => {
+    .createTable("users", (tbl) => {
+      tbl.increments();
+      tbl.string("username", 128).unique().notNullable();
+      tbl.text("password").notNullable();
+      tbl.string("name", 128).notNullable();
+      tbl.string("email_address", 128).unique().notNullable();
+
+      tbl.enum("role", ["student", "mentor"]).notNull().defaultTo("student");
+    });
+
+    return knex.schema.createTable("sessions", (table) => {
     table.increments();
     table
       .integer("user_id")
@@ -21,13 +26,13 @@ exports.up = async function (knex) {
     table.timestamp("expires");
   });
 
-  await knex.schema.createTable("projects", (tbl) => {
+  return knex.schema.createTable("projects", (tbl) => {
     tbl.increments();
     tbl.string("name", 128).unique().notNullable();
     tbl.date("due_date").notNullable();
   });
 
-  await knex.schema.createTable("reminders", (tbl) => {
+  return knex.schema.createTable("reminders", (tbl) => {
     tbl.increments();
 
     tbl.text("message").notNullable();
@@ -43,7 +48,7 @@ exports.up = async function (knex) {
       .onDelete("CASCADE");
   });
 
-  await knex.schema.createTable("projects_users", (tbl) => {
+  return knex.schema.createTable("projects_users", (tbl) => {
     tbl
       .integer("project_id")
       .unsigned()

@@ -65,3 +65,6 @@ typings/
 
 # SQLite3 databases
 *.db3
+
+# pg folder
+pg/
