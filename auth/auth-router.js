@@ -9,7 +9,7 @@ const db = require("../data/dbConfig");
 
 const router = express.Router();
 
-router.post("/register", async (req, res, next) => {
+router.post("/api/auth/register", async (req, res, next) => {
   try {
     // const { username, password, role } = req.body;
 
@@ -45,7 +45,7 @@ router.post("/register", async (req, res, next) => {
   }
 });
 
-router.post("/login", async (req, res, next) => {
+router.post("/api/auth/login", async (req, res, next) => {
   const authError = {
     message: "Invalid Credentials",
   };
@@ -90,7 +90,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 // restrict()
-router.get("/logout", restrict(), async (req, res, next) => {
+router.get("/api/logout", restrict(), async (req, res, next) => {
   try {
     await authModel.deleteById(req.session.id);
 
