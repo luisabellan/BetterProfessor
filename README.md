@@ -6,3 +6,4 @@ To access the documentation:
 * The page will be available at http://localhost:5000.
 
 
+The frontend is here: https://github.com/luisabellan/BetterProfessor-FE
