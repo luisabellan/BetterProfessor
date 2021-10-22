@@ -22,7 +22,7 @@ module.exports = {
     },
   },
 
-   staging: {
+/*    staging: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
 
@@ -37,7 +37,7 @@ module.exports = {
       directory: './data/seeds'
     }
   },
-
+ */
   production: {
     client: 'pg',
     connection: process.env.DATABASE_URL,

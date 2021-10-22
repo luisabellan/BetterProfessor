@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+
+    
+#  web:
+#    build:
+#      context: src
+#      dockerfile: Dockerfile
+#      args:
+#        - "NODE_ENV=production"
+#        - "REACT_APP_API_URL=https://api.example.com"
+#        - "REACT_APP_API_KEY=12345"
+#        - "REACT_APP_API_SECRET=abcdef"
+#        - "REACT_APP_API_VERSION=3"
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - "./src:/usr/src/app/src"
+#      - "./node_modules:/usr/src/app/node_modules"
+#      - "./dist:/usr/src/app/dist"
+#    networks:
+#      - "default"
+
+
+
+ 
+
+  pg:
+    image: postgres
+    container_name: pg-api-starter
+    ports:
+      - '5400:5432'
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-"docker"}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-"docker"}
+      - POSTGRES_DB=${POSTGRES_DB:-"api-dev"}
+    volumes:
+      - ./docker/pg/postgres.conf:/etc/postgresql/postgresql.conf
+      - ./data/pg:/var/lib/postgresql/data
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    networks:
+      - postgres
+    
+    restart: always
+
+  pgadmin:
+    container_name: pgadmin_labs
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_SERVER_JSON_FILE: /tmp/.pgadmin/servers.json
+    volumes:
+      - ./data/pgadmin:/tmp/.pgadmin
+    ports:
+      - '${PGADMIN_PORT:-5050}:80'
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
