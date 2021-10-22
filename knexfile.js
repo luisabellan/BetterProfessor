@@ -1,92 +1,40 @@
-// Update with your config settings.
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env' });
 
 module.exports = {
-  /*  development: {
-     client: "sqlite3",
-     useNullAsDefault: true, // needed for sqlite
-     connection: {
-       filename: "./data/users.db3",
-     },
-     migrations: {
-       directory: "./data/migrations",
-     },
-     seeds: {
-       directory: "./data/seeds",
-     },
-     // add the following
-     pool: {
-       afterCreate: (conn, done) => {
-         // runs after a connection is made to the sqlite engine
-         conn.run("PRAGMA foreign_keys = ON", done); // turn on FK enforcement
-       },
-     },
-   }, */
   development: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
-
+    migrations: { directory: './data/migrations' },
+    seeds: { directory: './data/seeds' },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
-    migrations: {
-      directory: './data/migrations'
-    },
-    seeds: {
-      directory: './data/seeds'
-    }
   },
-  staging: {
+
+  test: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
-
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      directory: './data/migrations'
-    },
-    seeds: {
-      directory: './data/seeds'
-    }
+    migrations: { directory: './data/migrations' },
+    seeds: { directory: './data/seeds' },
   },
-
 
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
-
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      directory: './data/migrations'
-    },
-    seeds: {
-      directory: './data/seeds'
-    }
-  },
-
-  testing: {
-    client: "sqlite3",
-    useNullAsDefault: true, // needed for sqlite
     connection: {
-      filename: "./data/test.db3",
+      connectionString: process.env.DATABASE_URL,
+      ssl: true,
     },
-    migrations: {
-      directory: "./data/migrations",
-    },
-    seeds: {
-      directory: "./data/seeds",
-    },
-    // add the following
-    pool: {
-      afterCreate: (conn, done) => {
-        // runs after a connection is made to the sqlite engine
-        conn.run("PRAGMA foreign_keys = ON", done); // turn on FK enforcement
-      },
-    },
+    migrations: { directory: './data/migrations' },
+    seeds: { directory: './data/seeds' },
   },
+  // Define a knex.raw trigger helper
+  onUpdateTrigger: (tableName) => `
+  CREATE TRIGGER update_timestamp
+  BEFORE UPDATE
+  ON ${tableName}
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_timestamp();
+    `,
 };

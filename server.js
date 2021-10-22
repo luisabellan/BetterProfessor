@@ -10,7 +10,8 @@ const projectsUsersRouter = require("./projects-users/projects-users-router");
 const projectsRouter = require("./projects/projects-router");
 const remindersRouter = require("./reminders/reminders-router");
 const restrict = require("./auth/authenticate-middleware");
-//const dotenv = require("dotenv");
+const dotenv = require("dotenv");
+dotenv.config();
 
 //const jokesRouter = require('../jokes/jokes-router.js');
 
@@ -21,18 +22,19 @@ server.use(helmet());
 server.use(cookieParser());
 server.use(express.json());
 
-server.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000",
-  })
-);
+// server.use(
+//   cors({
+//     credentials: true,
+//     origin: "http://localhost:3000",
+//   })
+// );
+server.use(cors());
 server.use("/", welcomeRouter);
 server.use("/api/users", restrict("mentor"), usersRouter);
 server.use("/api/projects-users", restrict("mentor"), projectsUsersRouter);
 server.use("/api/auth", authRouter);
 server.use("/api/projects", restrict("mentor"), projectsRouter);
-server.use("/api/", restrict("mentor"), remindersRouter);
+server.use("/api/reminders", restrict("mentor"), remindersRouter);
 
 server.get("/", (req, res, next) => {
   console.log(req.body);
